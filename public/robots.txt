@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.pvvolleyballacademy.com/sitemap-index.xml

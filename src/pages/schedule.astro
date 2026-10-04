@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+const description = 'Find general training schedule information for Puerto Viejo Volleyball Academy. Confirm current group times and court directions directly with PVVA before attending.';
+---
+
+<BaseLayout title="Training Schedule | Puerto Viejo Volleyball Academy" description={description}>
+  <PageIntro eyebrow="Training / Playa Cocles" title="Make time for the next rep." description="PVVA shares regular group training information here. Detailed and frequently updated scheduling stays in the academy's existing calendar." number="04" />
+  <section class="content-section schedule-section">
+    <div class="schedule-notice"><span class="notice-mark" aria-hidden="true">!</span><div><p class="eyebrow">Schedule details are being confirmed</p><h2>Check with PVVA before heading to the court.</h2><p>Group days, training times, and the exact court location have not yet been provided for this draft.</p></div></div>
+    <div class="schedule-details"><div><span>TRAINING AREA</span><strong>Playa Cocles, Puerto Viejo</strong></div><div><span>TIME ZONE</span><strong>Costa Rica Time · UTC−6</strong></div><div><span>DETAILED CALENDAR</span><strong>Shared directly by PVVA</strong></div></div>
+    <a class="button button-dark" href="https://wa.me/50664880471?text=Hi%20PVVA%2C%20can%20you%20share%20the%20current%20training%20schedule%20and%20court%20location%3F">Ask for current times <span aria-hidden="true">↗</span></a>
+  </section>
+  <section class="content-section content-section-muted"><p class="eyebrow">New to training?</p><h2>Complete the Join PVVA process first.</h2><p class="section-lead">Athletes should register and confirm their program before attending a training session.</p><a class="text-link" href="/join/">Start an inquiry <span aria-hidden="true">→</span></a></section>
+</BaseLayout>

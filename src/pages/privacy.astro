@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+const description = 'Privacy information for visitors contacting Puerto Viejo Volleyball Academy through its website.';
+---
+
+<BaseLayout title="Privacy | Puerto Viejo Volleyball Academy" description={description}>
+  <PageIntro eyebrow="Website information" title="Privacy matters." description="This draft website does not use analytics or collect form submissions." number="10" />
+  <section class="content-section content-section-narrow prose">
+    <h2>Contacting PVVA</h2><p>If you contact the academy by email or WhatsApp, the information you choose to share is handled by those services and PVVA. Avoid sending sensitive personal information in an initial inquiry.</p>
+    <h2>Website data</h2><p>This draft does not include a contact form, analytics, advertising pixels, or account registration. The hosting provider may process standard technical logs to deliver and protect the site.</p>
+    <h2>Before launch</h2><p>PVVA should review and update this notice to reflect its actual registration process, data retention practices, hosting provider, and any third-party tools used by the final website.</p>
+    <p>Questions: <a href="mailto:pvvolleyballacademy@gmail.com">pvvolleyballacademy@gmail.com</a>.</p>
+  </section>
+</BaseLayout>

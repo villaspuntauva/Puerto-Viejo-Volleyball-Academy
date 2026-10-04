@@ -1,0 +1,42 @@
+---
+const links = [
+  { href: '/academy/', label: 'Academy' },
+  { href: '/athletes/', label: 'Athletes' },
+  { href: '/coaches/', label: 'Coaches' },
+  { href: '/schedule/', label: 'Schedule' },
+];
+---
+
+<header class="site-header">
+  <a class="brand" href="/" aria-label="Puerto Viejo Volleyball Academy home">
+    <span class="brand-mark" aria-hidden="true">PVVA</span>
+    <span class="brand-name">Puerto Viejo<br />Volleyball Academy</span>
+  </a>
+  <nav class="desktop-nav" aria-label="Main navigation">
+    {links.map((link) => <a href={link.href}>{link.label}</a>)}
+    <details class="more-menu">
+      <summary>Explore</summary>
+      <div class="more-menu-panel">
+        <a href="/camps/">Camps</a>
+        <a href="/tournaments/">Tournaments</a>
+        <a href="/events/">Events &amp; news</a>
+        <a href="/contact/">Contact</a>
+      </div>
+    </details>
+  </nav>
+  <a class="button button-small header-join" href="/join/">Join PVVA <span aria-hidden="true">↗</span></a>
+  <details class="mobile-menu">
+    <summary aria-label="Open navigation"><span></span><span></span><span></span></summary>
+    <nav aria-label="Mobile navigation">
+      <a href="/academy/">Academy</a>
+      <a href="/athletes/">Athletes</a>
+      <a href="/coaches/">Coaches &amp; staff</a>
+      <a href="/schedule/">Schedule</a>
+      <a href="/camps/">Camps</a>
+      <a href="/tournaments/">Tournaments</a>
+      <a href="/events/">Events &amp; news</a>
+      <a href="/contact/">Contact</a>
+      <a class="mobile-join" href="/join/">Join PVVA <span aria-hidden="true">↗</span></a>
+    </nav>
+  </details>
+</header>

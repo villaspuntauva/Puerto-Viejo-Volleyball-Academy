@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+const description = 'Train in the Caribbean with Puerto Viejo Volleyball Academy. Camp dates, age groups, coaches, cost, and registration will be published when confirmed.';
+---
+
+<BaseLayout title="Beach Volleyball Camps in Costa Rica | PVVA" description={description}>
+  <PageIntro eyebrow="PVVA camps / Costa Rica" title="Train in the Caribbean." description="Focused beach volleyball development in Puerto Viejo, with the Caribbean coast as your training ground." number="05" />
+  <section class="camp-feature">
+    <div class="camp-feature-copy"><p class="eyebrow">Volleyball first. Caribbean always.</p><h2>Come for the training.<br /><em>Leave with more.</em></h2><p>PVVA is developing camps for athletes and teams who want serious beach volleyball in a distinctive coastal setting.</p><a class="button button-light" href="https://wa.me/50664880471?text=Hi%20PVVA%2C%20I%27m%20interested%20in%20camp%20dates%20and%20registration.">Register for a camp <span aria-hidden="true">↗</span></a></div>
+    <div class="camp-feature-meta"><p class="eyebrow">Camp details</p><dl><div><dt>Dates</dt><dd>To be announced</dd></div><div><dt>Age &amp; level</dt><dd>To be confirmed</dd></div><div><dt>Coaches</dt><dd>To be announced</dd></div><div><dt>Cost &amp; inclusions</dt><dd>To be confirmed</dd></div><div><dt>Accommodation</dt><dd>Details to come</dd></div></dl></div>
+  </section>
+  <section class="content-section content-section-narrow"><p class="eyebrow">Plan your visit</p><h2>Interested in bringing a team?</h2><p class="section-lead">Contact PVVA to discuss a future training visit, group camp, or team experience. Travel and accommodation arrangements are not currently part of the published camp offer.</p><a class="text-link" href="/contact/">Talk with PVVA <span aria-hidden="true">→</span></a></section>
+</BaseLayout>

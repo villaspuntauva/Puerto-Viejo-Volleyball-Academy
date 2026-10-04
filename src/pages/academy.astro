@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { programs } from '../data/programs';
+const description = 'Learn about Puerto Viejo Volleyball Academy, its beach volleyball development approach, athlete pathways, and team environment in Limón, Costa Rica.';
+---
+
+<BaseLayout title="The Academy | Puerto Viejo Volleyball Academy" description={description}>
+  <PageIntro eyebrow="The Academy / Puerto Viejo, Costa Rica" title="Develop the player. Build the game." description="PVVA is a beach volleyball academy in the Caribbean of Costa Rica, developing athletes through structured training, competition, and a strong team environment." number="01" />
+  <section class="content-section content-section-narrow">
+    <p class="eyebrow">Our mission</p>
+    <h2>Grow a lasting beach volleyball community in the Caribbean.</h2>
+    <div class="prose-columns"><p>PVVA is building opportunities for athletes in Puerto Viejo and surrounding communities to learn, train, and compete in beach volleyball. The academy welcomes athletes at different stages of development.</p><p>Training is intended to combine technical learning, individual development, competition, and a supportive team culture. As the academy grows, athletes will have opportunities to connect with visiting players and coaches from Costa Rica and beyond.</p></div>
+  </section>
+  <section class="content-section program-list-section">
+    <div class="section-heading section-heading-compact"><div><p class="eyebrow">Training pathways</p><h2>Programs</h2></div><a class="text-link" href="/join/">Ask about joining <span aria-hidden="true">→</span></a></div>
+    <div class="program-list">
+      {programs.map((program) => <article class="program-row"><span>{program.number}</span><div><h3>{program.name}</h3><p class="program-audience">{program.audience}</p><p>{program.description}</p><small>{program.status}</small></div></article>)}
+    </div>
+  </section>
+  <section class="content-section content-section-dark">
+    <p class="eyebrow">Learn. Train. Compete.</p><h2>More than time on the sand.</h2>
+    <div class="value-grid"><article><span>01</span><h3>Athlete development</h3><p>Build the technical and competitive skills athletes need to keep progressing.</p></article><article><span>02</span><h3>Competition</h3><p>Connect training with opportunities to test skills through tournaments and events.</p></article><article><span>03</span><h3>Team environment</h3><p>Develop alongside teammates and contribute to a growing local volleyball community.</p></article></div>
+    <a class="button button-light" href="/schedule/">View the schedule <span aria-hidden="true">↗</span></a>
+  </section>
+</BaseLayout>
