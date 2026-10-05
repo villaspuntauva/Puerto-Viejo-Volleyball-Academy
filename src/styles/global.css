@@ -41,6 +41,8 @@ button, summary { font: inherit; }
 .more-menu-panel { position: absolute; top: 28px; left: -14px; display: grid; min-width: 175px; padding: 8px; background: white; box-shadow: 0 12px 32px #24143324; }
 .more-menu-panel a { padding: 10px; font-size: 13px; text-decoration: none; }
 .more-menu-panel a:hover { color: var(--purple); background: #f5f1f8; }
+.language-switch { padding: 7px 10px; border-left: 1px solid var(--line); color: var(--purple); font-size: 11px; font-weight: 700; letter-spacing: .06em; text-decoration: none; }
+.language-switch:hover { text-decoration: underline; text-underline-offset: 4px; }
 .mobile-menu { display: none; }
 .button { display: inline-flex; min-height: 52px; align-items: center; justify-content: center; gap: 20px; padding: 0 23px; border: 1px solid transparent; font-size: 12px; font-weight: 700; letter-spacing: .03em; text-decoration: none; text-transform: uppercase; transition: background .18s ease, color .18s ease, border-color .18s ease; }
 .button:hover { transform: translateY(-1px); }
@@ -160,6 +162,8 @@ h2 { margin: 0; font-family: var(--font-display); font-size: clamp(43px, 6vw, 78
 .content-section > .eyebrow { margin-bottom: 13px; }
 .content-section > h2 { max-width: 800px; font-size: clamp(42px, 5.6vw, 68px); }
 .content-section > p:not(.eyebrow) { max-width: 740px; }
+.spanish-list { max-width: 760px; margin: 20px 0 0; padding-left: 22px; color: #514d55; }
+.spanish-list li { padding: 5px 0; }
 .prose-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 45px; max-width: 850px; margin-top: 26px; color: #514d55; }
 .prose-columns p { margin: 0; }
 .program-list-section { background: #f0edf2; }
@@ -259,6 +263,11 @@ h2 { margin: 0; font-family: var(--font-display); font-size: clamp(43px, 6vw, 78
 .not-found h1 em { color: var(--purple); font-style: normal; }
 .not-found > p:not(.eyebrow) { margin: 18px 0 25px; color: var(--muted); }
 
+html[lang="es"] h2,
+html[lang="es"] h3 { line-height: 1.12; }
+html[lang="es"] .hero-content h1 { line-height: .94; }
+html[lang="es"] .page-intro h1 { line-height: 1.02; }
+
 @media (max-width: 1100px) {
   .desktop-nav { gap: 14px; }
   .desktop-nav > a, .more-menu summary { font-size: 10px; }
@@ -285,6 +294,7 @@ h2 { margin: 0; font-family: var(--font-display); font-size: clamp(43px, 6vw, 78
   .mobile-menu nav { position: absolute; top: 55px; right: -12px; display: grid; width: min(340px, calc(100vw - 32px)); padding: 12px 20px 20px; background: white; box-shadow: 0 14px 34px #24143324; }
   .mobile-menu nav a { padding: 12px 2px; border-bottom: 1px solid #eeeaf1; font-size: 14px; font-weight: 600; text-decoration: none; }
   .mobile-menu nav .mobile-join { margin-top: 12px; padding: 13px 16px; color: white; border: 0; background: var(--purple); text-transform: uppercase; }
+  .mobile-menu nav .mobile-language { margin-top: 6px; color: var(--purple); font-size: 12px; font-weight: 700; text-transform: uppercase; }
   .home-hero { min-height: min(730px, calc(100svh - 72px)); }
   .hero-content { padding: 70px clamp(24px, 8vw, 70px); }
   .hero-content h1 { font-size: clamp(76px, 15vw, 120px); }

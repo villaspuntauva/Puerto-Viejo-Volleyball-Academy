@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageIntro from '../../components/PageIntro.astro';
+import { spanishPages } from '../../data/spanishPages';
+
+export function getStaticPaths() {
+  return Object.entries(spanishPages).map(([slug, page]) => ({
+    params: { slug },
+    props: { page },
+  }));
+}
+
+const { page } = Astro.props;
+---
+
+<BaseLayout lang="es" title={page.title} description={page.description}>
+  <PageIntro eyebrow={page.eyebrow} title={page.heading} description={page.intro} number={page.number} />
+  {page.sections.map((section, index) => (
+    <section class:list={['content-section', 'content-section-narrow', index % 2 === 1 && 'content-section-muted']}>
+      <p class="eyebrow">PVVA / Costa Rica</p>
+      <h2>{section.title}</h2>
+      {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+      {section.items && <ul class="spanish-list">{section.items.map((item) => <li>{item}</li>)}</ul>}
+    </section>
+  ))}
+  <section class="home-cta">
+    <p class="eyebrow">Puerto Viejo Volleyball Academy</p>
+    <h2>Entrena.<br /><em>Compite. Crece.</em></h2>
+    <p>Conoce el siguiente paso para entrenar con PVVA.</p>
+    <div class="hero-actions"><a class="button button-light" href={page.ctaHref}>{page.ctaLabel} <span aria-hidden="true">↗</span></a></div>
+  </section>
+</BaseLayout>

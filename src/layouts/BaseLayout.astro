@@ -1,6 +1,7 @@
 ---
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import { getLanguageAlternates, getLanguageHref } from '../data/locales';
 import '../styles/global.css';
 
 interface Props {
@@ -9,6 +10,7 @@ interface Props {
   image?: string;
   noindex?: boolean;
   structuredData?: Record<string, unknown>;
+  lang?: 'en' | 'es';
 }
 
 const {
@@ -17,19 +19,28 @@ const {
   image,
   noindex = false,
   structuredData,
+  lang = 'en',
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const socialImage = image ? new URL(image, Astro.site).href : undefined;
+const languageHref = getLanguageHref(Astro.url.pathname, lang);
+const languageAlternates = getLanguageAlternates(Astro.url.pathname, lang);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#35105d" />
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {languageAlternates && (
+      <>
+        <link rel="alternate" hreflang="en" href={new URL(languageAlternates.english, Astro.site).href} />
+        <link rel="alternate" hreflang="es" href={new URL(languageAlternates.spanish, Astro.site).href} />
+      </>
+    )}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
@@ -40,6 +51,7 @@ const socialImage = image ? new URL(image, Astro.site).href : undefined;
     <title>{title}</title>
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content={lang === 'es' ? 'es_CR' : 'en_US'} />
     <meta property="og:site_name" content="Puerto Viejo Volleyball Academy" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -55,10 +67,10 @@ const socialImage = image ? new URL(image, Astro.site).href : undefined;
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <SiteHeader />
+    <SiteHeader lang={lang} languageHref={languageHref} />
     <main id="main">
       <slot />
     </main>
-    <SiteFooter />
+    <SiteFooter lang={lang} />
   </body>
 </html>

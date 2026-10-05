@@ -25,6 +25,6 @@ The site is generated as static HTML. Page routes live in `src/pages/`, shared l
 - Confirm program age ranges, fees, coach biographies, upcoming camps, tournaments, and registration details.
 - Review privacy wording and choose a secure registration process before collecting athlete or guardian information.
 - Configure HTTPS and redirect the non-`www` domain to `https://www.pvvolleyballacademy.com/` with the selected hosting provider.
-- Add reviewed Spanish content and language-specific URLs if launching bilingually.
+- Have a fluent Spanish-speaking PVVA representative review the draft translations and metadata.
 
 # Puerto-Viejo-Volleyball-Academy

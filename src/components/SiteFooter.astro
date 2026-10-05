@@ -1,26 +1,46 @@
+---
+interface Props {
+  lang?: 'en' | 'es';
+}
+
+const { lang = 'en' } = Astro.props;
+const isSpanish = lang === 'es';
+const footerLinks = isSpanish
+  ? [
+      { href: '/es/academia/', label: 'Academia' },
+      { href: '/es/horarios/', label: 'Horarios' },
+      { href: '/es/campamentos/', label: 'Campamentos' },
+      { href: '/es/torneos/', label: 'Torneos' },
+      { href: '/es/contacto/', label: 'Contacto' },
+    ]
+  : [
+      { href: '/academy/', label: 'Academy' },
+      { href: '/schedule/', label: 'Schedule' },
+      { href: '/camps/', label: 'Camps' },
+      { href: '/tournaments/', label: 'Tournaments' },
+      { href: '/contact/', label: 'Contact' },
+    ];
+---
+
 <footer class="site-footer">
   <div class="footer-top">
     <div>
-      <a class="footer-brand" href="/" aria-label="Puerto Viejo Volleyball Academy home">
+      <a class="footer-brand" href={isSpanish ? '/es/' : '/'} aria-label={isSpanish ? 'Inicio de Puerto Viejo Volleyball Academy' : 'Puerto Viejo Volleyball Academy home'}>
         <img src="/pvva-logo.png" alt="" width="1254" height="1254" loading="lazy" />
       </a>
-      <p>Train. Compete. Grow.<br />Beach volleyball development in the Caribbean of Costa Rica.</p>
+      <p>{isSpanish ? 'Entrena. Compite. Crece.' : 'Train. Compete. Grow.'}<br />{isSpanish ? 'Desarrollo de voleibol de playa en el Caribe de Costa Rica.' : 'Beach volleyball development in the Caribbean of Costa Rica.'}</p>
     </div>
     <div class="footer-links">
-      <a href="/academy/">Academy</a>
-      <a href="/schedule/">Schedule</a>
-      <a href="/camps/">Camps</a>
-      <a href="/tournaments/">Tournaments</a>
-      <a href="/contact/">Contact</a>
+      {footerLinks.map((link) => <a href={link.href}>{link.label}</a>)}
     </div>
     <div class="footer-contact">
       <a href="mailto:pvvolleyballacademy@gmail.com">pvvolleyballacademy@gmail.com</a>
       <a href="https://wa.me/50664880471">WhatsApp +506 6488 0471</a>
-      <span>Playa Cocles, Puerto Viejo, Limón, Costa Rica</span>
+      <span>{isSpanish ? 'Playa Cocles, Puerto Viejo, Limón, Costa Rica' : 'Playa Cocles, Puerto Viejo, Limón, Costa Rica'}</span>
     </div>
   </div>
   <div class="footer-bottom">
     <span>© {new Date().getFullYear()} Puerto Viejo Volleyball Academy</span>
-    <a href="/privacy/">Privacy</a>
+    <a href={isSpanish ? '/es/privacidad/' : '/privacy/'}>{isSpanish ? 'Privacidad' : 'Privacy'}</a>
   </div>
 </footer>

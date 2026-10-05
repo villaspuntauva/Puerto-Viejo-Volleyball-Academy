@@ -1,42 +1,64 @@
 ---
-const links = [
-  { href: '/academy/', label: 'Academy' },
-  { href: '/athletes/', label: 'Athletes' },
-  { href: '/coaches/', label: 'Coaches' },
-  { href: '/schedule/', label: 'Schedule' },
-];
+interface Props {
+  lang?: 'en' | 'es';
+  languageHref?: string;
+}
+
+const { lang = 'en', languageHref = '/es/' } = Astro.props;
+const isSpanish = lang === 'es';
+const links = isSpanish
+  ? [
+      { href: '/es/academia/', label: 'Academia' },
+      { href: '/es/atletas/', label: 'Atletas' },
+      { href: '/es/entrenadores/', label: 'Entrenadores' },
+      { href: '/es/horarios/', label: 'Horarios' },
+    ]
+  : [
+      { href: '/academy/', label: 'Academy' },
+      { href: '/athletes/', label: 'Athletes' },
+      { href: '/coaches/', label: 'Coaches' },
+      { href: '/schedule/', label: 'Schedule' },
+    ];
+const exploreLinks = isSpanish
+  ? [
+      { href: '/es/campamentos/', label: 'Campamentos' },
+      { href: '/es/torneos/', label: 'Torneos' },
+      { href: '/es/eventos/', label: 'Eventos y noticias' },
+      { href: '/es/contacto/', label: 'Contacto' },
+    ]
+  : [
+      { href: '/camps/', label: 'Camps' },
+      { href: '/tournaments/', label: 'Tournaments' },
+      { href: '/events/', label: 'Events & news' },
+      { href: '/contact/', label: 'Contact' },
+    ];
+const joinHref = isSpanish ? '/es/inscripcion/' : '/join/';
 ---
 
 <header class="site-header">
-  <a class="brand" href="/" aria-label="Puerto Viejo Volleyball Academy home">
+  <a class="brand" href={isSpanish ? '/es/' : '/'} aria-label={isSpanish ? 'Inicio de Puerto Viejo Volleyball Academy' : 'Puerto Viejo Volleyball Academy home'}>
     <img class="brand-logo" src="/pvva-logo.png" alt="" width="1254" height="1254" />
     <span class="brand-name">Puerto Viejo<br />Volleyball Academy</span>
   </a>
-  <nav class="desktop-nav" aria-label="Main navigation">
+  <nav class="desktop-nav" aria-label={isSpanish ? 'Navegación principal' : 'Main navigation'}>
     {links.map((link) => <a href={link.href}>{link.label}</a>)}
     <details class="more-menu">
-      <summary>Explore</summary>
+      <summary>{isSpanish ? 'Más' : 'Explore'}</summary>
       <div class="more-menu-panel">
-        <a href="/camps/">Camps</a>
-        <a href="/tournaments/">Tournaments</a>
-        <a href="/events/">Events &amp; news</a>
-        <a href="/contact/">Contact</a>
+        {exploreLinks.map((link) => <a href={link.href}>{link.label}</a>)}
       </div>
     </details>
   </nav>
-  <a class="button button-small header-join" href="/join/">Join PVVA <span aria-hidden="true">↗</span></a>
+  <a class="language-switch" href={languageHref} lang={isSpanish ? 'en' : 'es'} aria-label={isSpanish ? 'Ver en inglés' : 'Ver en español'}>{isSpanish ? 'EN' : 'ES'}</a>
+  <a class="button button-small header-join" href={joinHref}>{isSpanish ? 'Únete a PVVA' : 'Join PVVA'} <span aria-hidden="true">↗</span></a>
   <details class="mobile-menu">
-    <summary aria-label="Open navigation"><span></span><span></span><span></span></summary>
-    <nav aria-label="Mobile navigation">
-      <a href="/academy/">Academy</a>
-      <a href="/athletes/">Athletes</a>
-      <a href="/coaches/">Coaches &amp; staff</a>
-      <a href="/schedule/">Schedule</a>
-      <a href="/camps/">Camps</a>
-      <a href="/tournaments/">Tournaments</a>
-      <a href="/events/">Events &amp; news</a>
-      <a href="/contact/">Contact</a>
-      <a class="mobile-join" href="/join/">Join PVVA <span aria-hidden="true">↗</span></a>
+    <summary aria-label={isSpanish ? 'Abrir navegación' : 'Open navigation'}><span></span><span></span><span></span></summary>
+    <nav aria-label={isSpanish ? 'Navegación móvil' : 'Mobile navigation'}>
+      <a href={isSpanish ? '/es/' : '/'}>{isSpanish ? 'Inicio' : 'Home'}</a>
+      {links.map((link) => <a href={link.href}>{link.label}</a>)}
+      {exploreLinks.map((link) => <a href={link.href}>{link.label}</a>)}
+      <a class="mobile-language" href={languageHref} lang={isSpanish ? 'en' : 'es'}>{isSpanish ? 'English' : 'Español'}</a>
+      <a class="mobile-join" href={joinHref}>{isSpanish ? 'Únete a PVVA' : 'Join PVVA'} <span aria-hidden="true">↗</span></a>
     </nav>
   </details>
 </header>
