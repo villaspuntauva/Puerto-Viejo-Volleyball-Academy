@@ -1,15 +1,38 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageIntro from '../components/PageIntro.astro';
-const description = 'Find general training schedule information for Puerto Viejo Volleyball Academy. Confirm current group times and court directions directly with PVVA before attending.';
+
+const description = 'View the provisional Week 1 boys and ladies training schedule for Puerto Viejo Volleyball Academy in Playa Cocles, Costa Rica.';
+const sessions = [
+  { day: 'Monday', group: 'Boys', time: '2:30–4:15 PM', duration: '1 hour 45 min', focus: 'Development / High Volume' },
+  { day: 'Monday', group: 'Boys', time: '4:15–6:00 PM', duration: '1 hour 45 min', focus: 'Development / High Volume' },
+  { day: 'Tuesday', group: 'Ladies', time: '4:30–5:45 PM', duration: '1 hour 15 min', focus: 'Technical + Tactical' },
+  { day: 'Wednesday', group: 'Boys', time: '3:00–4:30 PM', duration: '1 hour 30 min', focus: 'Speed / Power + Beach Skills' },
+  { day: 'Wednesday', group: 'Boys', time: '4:30–6:00 PM', duration: '1 hour 30 min', focus: 'Speed / Power + Beach Skills' },
+  { day: 'Thursday AM', group: 'Boys', time: '7:00–8:30 AM', duration: '1 hour 30 min', focus: 'Game Play + Tactical' },
+  { day: 'Thursday PM', group: 'Boys', time: '3:00–4:30 PM', duration: '1 hour 30 min', focus: 'Game Play + Tactical' },
+  { day: 'Thursday PM', group: 'Ladies', time: '4:30–5:45 PM', duration: '1 hour 15 min', focus: 'Technical + Tactical' },
+];
 ---
 
 <BaseLayout title="Training Schedule | Puerto Viejo Volleyball Academy" description={description}>
-  <PageIntro eyebrow="Training / Playa Cocles" title="Make time for the next rep." description="PVVA shares regular group training information here. Detailed and frequently updated scheduling stays in the academy's existing calendar." number="04" />
+  <PageIntro eyebrow="Training / Playa Cocles" title="Make time for the next rep." number="04" />
   <section class="content-section schedule-section">
-    <div class="schedule-notice"><span class="notice-mark" aria-hidden="true">!</span><div><p class="eyebrow">Schedule details are being confirmed</p><h2>Check with PVVA before heading to the court.</h2><p>Group days, training times, and the exact court location have not yet been provided for this draft.</p></div></div>
-    <div class="schedule-details"><div><span>TRAINING AREA</span><strong>Playa Cocles, Puerto Viejo</strong></div><div><span>TIME ZONE</span><strong>Costa Rica Time · UTC−6</strong></div><div><span>DETAILED CALENDAR</span><strong>Shared directly by PVVA</strong></div></div>
-    <a class="button button-dark" href="https://wa.me/50664880471?text=Hi%20PVVA%2C%20can%20you%20share%20the%20current%20training%20schedule%20and%20court%20location%3F">Ask for current times <span aria-hidden="true">↗</span></a>
+    <div class="schedule-notice"><span class="notice-mark" aria-hidden="true">!</span><div><p class="eyebrow">Provisional schedule</p><h2>Weekly training schedule</h2><p>Training times and session focuses are a draft and may change. Please confirm with PVVA before heading to the court.</p></div></div>
+    <div class="schedule-table-wrap" role="region" aria-label="Week 1 training schedule" tabindex="0">
+      <table class="schedule-table">
+        <thead>
+          <tr><th scope="col">Day</th><th scope="col">Group</th><th scope="col">Training Time</th><th scope="col">Duration</th><th scope="col">Session Focus</th></tr>
+        </thead>
+        <tbody>
+          {sessions.map((session) => (
+            <tr><th scope="row">{session.day}</th><td>{session.group}</td><td>{session.time}</td><td>{session.duration}</td><td>{session.focus}</td></tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <div class="schedule-details"><div><span>TRAINING AREA</span><strong>Playa Cocles, Puerto Viejo</strong></div><div><span>TIME ZONE</span><strong>Costa Rica Time · UTC−6</strong></div></div>
+    <a class="button button-dark" href="https://wa.me/50664880471?text=Hi%20PVVA%2C%20can%20you%20confirm%20the%20Week%201%20training%20schedule%3F">Confirm the schedule <span aria-hidden="true">↗</span></a>
   </section>
   <section class="content-section content-section-muted"><p class="eyebrow">New to training?</p><h2>Complete the Join PVVA process first.</h2><p class="section-lead">Athletes should register and confirm their program before attending a training session.</p><a class="text-link" href="/join/">Start an inquiry <span aria-hidden="true">→</span></a></section>
 </BaseLayout>

@@ -33,6 +33,9 @@ const exploreLinks = isSpanish
       { href: '/contact/', label: 'Contact' },
     ];
 const joinHref = isSpanish ? '/es/inscripcion/' : '/join/';
+const whatsappHref = isSpanish
+  ? 'https://wa.me/50664880471?text=Hola%20PVVA%2C%20me%20gustar%C3%ADa%20ponerme%20en%20contacto.'
+  : 'https://wa.me/50664880471?text=Hi%20PVVA%2C%20I%27d%20like%20to%20get%20in%20touch.';
 ---
 
 <header class="site-header">
@@ -49,8 +52,11 @@ const joinHref = isSpanish ? '/es/inscripcion/' : '/join/';
       </div>
     </details>
   </nav>
-  <a class="language-switch" href={languageHref} lang={isSpanish ? 'en' : 'es'} aria-label={isSpanish ? 'Ver en inglés' : 'Ver en español'}>{isSpanish ? 'EN' : 'ES'}</a>
-  <a class="button button-small header-join" href={joinHref}>{isSpanish ? 'Únete a PVVA' : 'Join PVVA'} <span aria-hidden="true">↗</span></a>
+  <a class="language-switch" href={languageHref} lang={isSpanish ? 'en' : 'es'} aria-label={isSpanish ? 'Ver en inglés' : 'Ver en español'}>{isSpanish ? 'English' : 'Español'}</a>
+  <div class="header-actions">
+    <a class="button button-small button-outline header-contact" href={whatsappHref} target="_blank" rel="noopener noreferrer">{isSpanish ? 'Contáctanos' : 'Contact Us'} <span aria-hidden="true">↗</span></a>
+    <a class="button button-small header-join" href={joinHref}>{isSpanish ? 'Únete a PVVA' : 'Join PVVA'} <span aria-hidden="true">↗</span></a>
+  </div>
   <details class="mobile-menu">
     <summary aria-label={isSpanish ? 'Abrir navegación' : 'Open navigation'}><span></span><span></span><span></span></summary>
     <nav aria-label={isSpanish ? 'Navegación móvil' : 'Mobile navigation'}>
@@ -58,6 +64,7 @@ const joinHref = isSpanish ? '/es/inscripcion/' : '/join/';
       {links.map((link) => <a href={link.href}>{link.label}</a>)}
       {exploreLinks.map((link) => <a href={link.href}>{link.label}</a>)}
       <a class="mobile-language" href={languageHref} lang={isSpanish ? 'en' : 'es'}>{isSpanish ? 'English' : 'Español'}</a>
+      <a class="mobile-contact" href={whatsappHref} target="_blank" rel="noopener noreferrer">{isSpanish ? 'Contáctanos por WhatsApp' : 'Contact us on WhatsApp'} <span aria-hidden="true">↗</span></a>
       <a class="mobile-join" href={joinHref}>{isSpanish ? 'Únete a PVVA' : 'Join PVVA'} <span aria-hidden="true">↗</span></a>
     </nav>
   </details>
