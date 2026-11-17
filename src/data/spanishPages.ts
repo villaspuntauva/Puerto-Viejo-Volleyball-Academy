@@ -1,3 +1,5 @@
+import type { PhotoKey } from './photos';
+
 export interface SpanishPageSection {
   title: string;
   paragraphs: string[];
@@ -11,6 +13,7 @@ export interface SpanishPage {
   heading: string;
   intro: string;
   number: string;
+  photo?: PhotoKey;
   sections: SpanishPageSection[];
   ctaLabel: string;
   ctaHref: string;
@@ -24,6 +27,7 @@ export const spanishPages: Record<string, SpanishPage> = {
     heading: 'Desarrolla tu juego. Construye el equipo.',
     intro: 'PVVA es una academia de voleibol de playa en el Caribe de Costa Rica. Desarrollamos atletas mediante entrenamientos estructurados, competencia y un fuerte sentido de equipo.',
     number: '01',
+    photo: 'teamLineupWide',
     sections: [
       {
         title: 'Nuestra misión',
@@ -60,6 +64,7 @@ export const spanishPages: Record<string, SpanishPage> = {
     heading: 'Cada atleta tiene un próximo paso.',
     intro: 'PVVA reúne a atletas de voleibol de playa en desarrollo y competencia de Puerto Viejo y la región.',
     number: '02',
+    photo: 'athletesJump',
     sections: [
       {
         title: 'Premier',
@@ -80,6 +85,7 @@ export const spanishPages: Record<string, SpanishPage> = {
     heading: 'Las personas detrás del progreso.',
     intro: 'Conoce a las personas que están creando más oportunidades para el voleibol de playa en Puerto Viejo y el Caribe de Costa Rica.',
     number: '03',
+    photo: 'teamTalk',
     sections: [
       {
         title: 'Yulius Brown Rudolf',
@@ -103,6 +109,7 @@ export const spanishPages: Record<string, SpanishPage> = {
     heading: 'Haz espacio para la próxima repetición.',
     intro: 'Borrador del horario de entrenamiento de la semana 1 para chicos y mujeres de PVVA.',
     number: '04',
+    photo: 'settingPractice',
     sections: [
       {
         title: 'Semana 1 · horario provisional',
@@ -134,6 +141,7 @@ export const spanishPages: Record<string, SpanishPage> = {
     heading: 'Entrena en el Caribe.',
     intro: 'Desarrollo enfocado en voleibol de playa en Puerto Viejo, con la costa caribeña como escenario de entrenamiento.',
     number: '05',
+    photo: 'caribbeanCourt',
     sections: [
       {
         title: 'Voleibol en primer lugar. El Caribe, siempre.',
@@ -155,6 +163,7 @@ export const spanishPages: Record<string, SpanishPage> = {
     heading: 'Gana cada punto.',
     intro: 'Los torneos de PVVA reúnen a atletas para competir, aprender y hacer crecer el voleibol en el Caribe de Costa Rica.',
     number: '06',
+    photo: 'rallySpike',
     sections: [
       {
         title: 'Próximos torneos',
@@ -175,6 +184,7 @@ export const spanishPages: Record<string, SpanishPage> = {
     heading: 'En la arena y alrededor del juego.',
     intro: 'Sigue las clínicas, campamentos, torneos, logros de atletas e historias de la comunidad PVVA.',
     number: '07',
+    photo: 'gatherShore',
     sections: [
       {
         title: 'Eventos y noticias',
@@ -192,6 +202,7 @@ export const spanishPages: Record<string, SpanishPage> = {
     heading: 'Da el siguiente paso.',
     intro: 'Formar parte de PVVA implica un compromiso con la academia y el programa de entrenamiento. Empecemos con una conversación para conocer tus metas.',
     number: '08',
+    photo: 'rallyDrill',
     sections: [
       {
         title: 'Regístrate antes de tu primera sesión',
@@ -213,6 +224,7 @@ export const spanishPages: Record<string, SpanishPage> = {
     heading: 'Hablemos de voleibol.',
     intro: '¿Tienes preguntas sobre entrenamientos, campamentos, torneos o una visita de equipo a Puerto Viejo? Escribe a PVVA.',
     number: '09',
+    photo: 'coastTeam',
     sections: [
       {
         title: 'Puerto Viejo Volleyball Academy',

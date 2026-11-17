@@ -1,0 +1,116 @@
+---
+import Photo from './Photo.astro';
+import type { PhotoKey } from '../data/photos';
+
+interface Props {
+  photos: PhotoKey[];
+  lang?: 'en' | 'es';
+  label: string;
+}
+
+const { photos, lang = 'en', label } = Astro.props;
+const prevLabel = lang === 'es' ? 'Foto anterior' : 'Previous photo';
+const nextLabel = lang === 'es' ? 'Foto siguiente' : 'Next photo';
+---
+
+<div class="v-carousel" role="region" aria-roledescription="carousel" aria-label={label} data-carousel>
+  <button class="v-carousel-arrow v-carousel-prev" type="button" aria-label={prevLabel} data-dir="-1">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+  </button>
+  <div class="v-carousel-viewport">
+    <ul class="v-carousel-track">
+      {photos.map((key) => (
+        <li class="v-carousel-slide">
+          <Photo photo={key} lang={lang} />
+        </li>
+      ))}
+    </ul>
+  </div>
+  <button class="v-carousel-arrow v-carousel-next" type="button" aria-label={nextLabel} data-dir="1">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
+  </button>
+</div>
+
+<script>
+  const SPEED = 38; // px per second while auto-scrolling
+  const STEP_MS = 520; // arrow slide duration
+
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((carousel) => {
+    const viewport = carousel.querySelector<HTMLElement>('.v-carousel-viewport');
+    const track = carousel.querySelector<HTMLElement>('.v-carousel-track');
+    if (!viewport || !track) return;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Random order on every visit.
+    const slides = Array.from(track.children) as HTMLElement[];
+    for (let i = slides.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [slides[i], slides[j]] = [slides[j], slides[i]];
+    }
+    slides.forEach((slide) => track.appendChild(slide));
+
+    // A second copy of the set makes the loop seamless.
+    slides.forEach((slide) => {
+      const clone = slide.cloneNode(true) as HTMLElement;
+      clone.setAttribute('aria-hidden', 'true');
+      const img = clone.querySelector('img');
+      img?.setAttribute('alt', '');
+      img?.setAttribute('loading', 'eager');
+      track.appendChild(clone);
+    });
+    carousel.classList.add('is-ready');
+
+    const gap = () => parseFloat(getComputedStyle(track).columnGap) || 0;
+    const loopWidth = () => (track.scrollWidth + gap()) / 2;
+    const stepWidth = () => slides[0].getBoundingClientRect().width + gap();
+
+    let offset = 0;
+    let hovering = false;
+    let tween: { from: number; to: number; start: number } | null = null;
+    let last = performance.now();
+
+    const render = () => {
+      const w = loopWidth();
+      const x = ((offset % w) + w) % w;
+      track.style.transform = `translate3d(${-x}px, 0, 0)`;
+    };
+    const ease = (t: number) => 1 - Math.pow(1 - t, 3);
+
+    const frame = (now: number) => {
+      const dt = Math.min(now - last, 100) / 1000;
+      last = now;
+      if (tween) {
+        const t = Math.min((now - tween.start) / STEP_MS, 1);
+        offset = tween.from + (tween.to - tween.from) * ease(t);
+        if (t === 1) tween = null;
+      } else if (!hovering && !reduceMotion) {
+        offset += SPEED * dt;
+      }
+      render();
+      requestAnimationFrame(frame);
+    };
+
+    carousel.querySelectorAll<HTMLButtonElement>('.v-carousel-arrow').forEach((button) => {
+      button.addEventListener('click', () => {
+        const dir = Number(button.dataset.dir);
+        const step = stepWidth();
+        // Move to the next whole slide in the chosen direction.
+        const base = tween ? tween.to : offset;
+        const target = dir > 0
+          ? (Math.floor(base / step + 0.001) + 1) * step
+          : (Math.ceil(base / step - 0.001) - 1) * step;
+        if (reduceMotion) {
+          offset = target;
+          tween = null;
+        } else {
+          tween = { from: offset, to: target, start: performance.now() };
+        }
+      });
+    });
+
+    viewport.addEventListener('mouseenter', () => (hovering = true));
+    viewport.addEventListener('mouseleave', () => (hovering = false));
+    window.addEventListener('resize', render);
+    requestAnimationFrame(frame);
+  });
+</script>

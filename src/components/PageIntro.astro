@@ -1,15 +1,27 @@
 ---
+import Photo from './Photo.astro';
+import type { PhotoKey } from '../data/photos';
+
 interface Props {
   eyebrow: string;
   title: string;
   description?: string;
   number?: string;
+  /** Horizontal photo shown full-bleed behind the header. */
+  photo?: PhotoKey;
+  lang?: 'en' | 'es';
 }
 
-const { eyebrow, title, description, number } = Astro.props;
+const { eyebrow, title, description, number, photo, lang = 'en' } = Astro.props;
 ---
 
-<section class="page-intro">
+<section class:list={['page-intro', photo && 'page-intro-photo']}>
+  {photo && (
+    <>
+      <Photo class="page-intro-bg" photo={photo} lang={lang} priority />
+      <div class="page-intro-shade" aria-hidden="true"></div>
+    </>
+  )}
   <div class="page-intro-inner">
     <p class="eyebrow">{eyebrow}</p>
     <h1>{title}</h1>

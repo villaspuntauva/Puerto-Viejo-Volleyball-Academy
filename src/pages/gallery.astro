@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import PhotoGallery from '../components/PhotoGallery.astro';
+import { photoAttrs } from '../data/photos';
+const description = 'Photo gallery of Puerto Viejo Volleyball Academy: beach volleyball training, drills, coaching, and team life on Playa Cocles in the Caribbean of Costa Rica.';
+---
+
+<BaseLayout title="Photo Gallery | Puerto Viejo Volleyball Academy" description={description} image={photoAttrs('agilityDrill').src}>
+  <PageIntro eyebrow="Gallery / Playa Cocles" title="Life on the sand." description="Training, drills, coaching, and the moments in between at Puerto Viejo Volleyball Academy." number="10" photo="agilityDrill" />
+  <section class="gallery-section">
+    <PhotoGallery />
+  </section>
+</BaseLayout>

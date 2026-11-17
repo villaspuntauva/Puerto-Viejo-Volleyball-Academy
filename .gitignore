@@ -5,3 +5,5 @@ dist/
 .env.*
 !.env.example
 .DS_Store
+# Full-resolution source photos (optimized copies live in public/images)
+photo-originals/

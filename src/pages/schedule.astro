@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageIntro from '../components/PageIntro.astro';
+import { photoAttrs } from '../data/photos';
 
 const description = 'View the provisional Week 1 boys and ladies training schedule for Puerto Viejo Volleyball Academy in Playa Cocles, Costa Rica.';
 const sessions = [
@@ -15,8 +16,8 @@ const sessions = [
 ];
 ---
 
-<BaseLayout title="Training Schedule | Puerto Viejo Volleyball Academy" description={description}>
-  <PageIntro eyebrow="Training / Playa Cocles" title="Make time for the next rep." number="04" />
+<BaseLayout title="Training Schedule | Puerto Viejo Volleyball Academy" description={description} image={photoAttrs('settingPractice').src}>
+  <PageIntro eyebrow="Training / Playa Cocles" title="Make time for the next rep." number="04" photo="settingPractice" />
   <section class="content-section schedule-section">
     <div class="schedule-notice"><span class="notice-mark" aria-hidden="true">!</span><div><p class="eyebrow">Provisional schedule</p><h2>Weekly training schedule</h2><p>Training times and session focuses are a draft and may change. Please confirm with PVVA before heading to the court.</p></div></div>
     <div class="schedule-table-wrap" role="region" aria-label="Week 1 training schedule" tabindex="0">

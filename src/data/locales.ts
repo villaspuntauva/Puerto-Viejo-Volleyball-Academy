@@ -9,6 +9,7 @@ export const englishToSpanishRoutes: Record<string, string> = {
   '/events/': '/es/eventos/',
   '/join/': '/es/inscripcion/',
   '/contact/': '/es/contacto/',
+  '/gallery/': '/es/galeria/',
   '/privacy/': '/es/privacidad/',
 };
 

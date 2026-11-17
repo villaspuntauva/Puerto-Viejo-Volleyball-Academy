@@ -1,0 +1,25 @@
+---
+import { photos, photoAttrs, type PhotoKey } from '../data/photos';
+
+interface Props {
+  photo: PhotoKey;
+  lang?: 'en' | 'es';
+  class?: string;
+  priority?: boolean;
+}
+
+const { photo, lang = 'en', class: className, priority = false } = Astro.props;
+const attrs = photoAttrs(photo);
+---
+
+<img
+  class={className}
+  style={(photos[photo] as { focus?: string }).focus ? `object-position: ${(photos[photo] as { focus?: string }).focus}` : undefined}
+  src={attrs.src}
+  alt={photos[photo].alt[lang]}
+  width={attrs.width}
+  height={attrs.height}
+  loading={priority ? 'eager' : 'lazy'}
+  decoding={priority ? 'sync' : 'async'}
+  fetchpriority={priority ? 'high' : undefined}
+/>

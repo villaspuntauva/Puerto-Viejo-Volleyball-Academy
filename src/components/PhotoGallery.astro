@@ -1,0 +1,91 @@
+---
+import Photo from './Photo.astro';
+import { photos, photoAttrs, allPhotoKeys, type PhotoKey } from '../data/photos';
+
+interface Props {
+  lang?: 'en' | 'es';
+}
+
+const { lang = 'en' } = Astro.props;
+const t = lang === 'es'
+  ? { open: 'Ampliar foto', close: 'Cerrar', prev: 'Foto anterior', next: 'Foto siguiente', label: 'Visor de fotos' }
+  : { open: 'View larger', close: 'Close', prev: 'Previous photo', next: 'Next photo', label: 'Photo viewer' };
+
+// Mix orientations: one vertical after every three horizontals.
+// Similar shots sit next to each other in the photo list, so spread them out with a fixed stride.
+const spread = (keys: PhotoKey[], stride: number) => keys.map((_, i) => keys[(i * stride) % keys.length]);
+const horizontals = spread(allPhotoKeys.filter((key) => photos[key].orientation === 'horizontal'), 7);
+const verticals = spread(allPhotoKeys.filter((key) => photos[key].orientation === 'vertical'), 3);
+const ordered: PhotoKey[] = [];
+while (horizontals.length || verticals.length) {
+  ordered.push(...horizontals.splice(0, 3));
+  if (verticals.length) ordered.push(verticals.shift()!);
+}
+---
+
+<div class="gallery-grid" data-gallery>
+  {ordered.map((key, index) => (
+    <button
+      class:list={['gallery-item', `gallery-item-${photos[key].orientation}`]}
+      type="button"
+      data-index={index}
+      data-src={photoAttrs(key).src}
+      data-alt={photos[key].alt[lang]}
+      aria-label={`${t.open}: ${photos[key].alt[lang]}`}
+    >
+      <Photo photo={key} lang={lang} />
+    </button>
+  ))}
+</div>
+
+<dialog class="lightbox" aria-label={t.label} data-lightbox>
+  <button class="lightbox-close" type="button" aria-label={t.close} data-close>×</button>
+  <button class="lightbox-arrow lightbox-prev" type="button" aria-label={t.prev} data-step="-1">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+  </button>
+  <figure>
+    <img alt="" />
+    <figcaption></figcaption>
+  </figure>
+  <button class="lightbox-arrow lightbox-next" type="button" aria-label={t.next} data-step="1">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
+  </button>
+</dialog>
+
+<script>
+  const grid = document.querySelector<HTMLElement>('[data-gallery]');
+  const dialog = document.querySelector<HTMLDialogElement>('[data-lightbox]');
+  if (grid && dialog) {
+    const items = Array.from(grid.querySelectorAll<HTMLButtonElement>('.gallery-item'));
+    const img = dialog.querySelector('img')!;
+    const caption = dialog.querySelector('figcaption')!;
+    let current = 0;
+
+    const show = (index: number) => {
+      current = (index + items.length) % items.length;
+      const item = items[current];
+      img.src = item.dataset.src ?? '';
+      img.alt = item.dataset.alt ?? '';
+      caption.textContent = item.dataset.alt ?? '';
+    };
+
+    items.forEach((item, index) =>
+      item.addEventListener('click', () => {
+        show(index);
+        dialog.showModal();
+      }),
+    );
+    dialog.querySelectorAll<HTMLButtonElement>('[data-step]').forEach((button) =>
+      button.addEventListener('click', () => show(current + Number(button.dataset.step))),
+    );
+    dialog.querySelector('[data-close]')?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+    dialog.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') show(current - 1);
+      if (event.key === 'ArrowRight') show(current + 1);
+    });
+    dialog.addEventListener('close', () => items[current]?.focus());
+  }
+</script>

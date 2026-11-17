@@ -1,11 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageIntro from '../components/PageIntro.astro';
+import { photoAttrs } from '../data/photos';
 const description = 'Meet the athletes developing and competing with Puerto Viejo Volleyball Academy. Athlete profiles will be published with player and guardian approval.';
 ---
 
-<BaseLayout title="Athletes | Puerto Viejo Volleyball Academy" description={description}>
-  <PageIntro eyebrow="The roster / PVVA" title="Every athlete has a next step." description="PVVA brings together developing and competitive beach volleyball athletes from Puerto Viejo and the wider region." number="02" />
+<BaseLayout title="Athletes | Puerto Viejo Volleyball Academy" description={description} image={photoAttrs('athletesJump').src}>
+  <PageIntro eyebrow="The roster / PVVA" title="Every athlete has a next step." description="PVVA brings together developing and competitive beach volleyball athletes from Puerto Viejo and the wider region." number="02" photo="athletesJump" />
   <section class="content-section roster-section">
     <div class="section-heading section-heading-compact"><div><p class="eyebrow">Competitive pathway</p><h2>Premier</h2></div><span class="roster-status">Roster in development</span></div>
     <p class="section-lead">The Premier roster will highlight athletes training toward higher-level competition. Profiles will be added with athlete and, where needed, guardian consent.</p>

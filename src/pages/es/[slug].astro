@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageIntro from '../../components/PageIntro.astro';
 import { spanishPages } from '../../data/spanishPages';
+import { photoAttrs } from '../../data/photos';
 
 export function getStaticPaths() {
   return Object.entries(spanishPages).map(([slug, page]) => ({
@@ -13,8 +14,8 @@ export function getStaticPaths() {
 const { page } = Astro.props;
 ---
 
-<BaseLayout lang="es" title={page.title} description={page.description}>
-  <PageIntro eyebrow={page.eyebrow} title={page.heading} description={page.intro} number={page.number} />
+<BaseLayout lang="es" title={page.title} description={page.description} image={page.photo && photoAttrs(page.photo).src}>
+  <PageIntro eyebrow={page.eyebrow} title={page.heading} description={page.intro} number={page.number} photo={page.photo} lang="es" />
   {page.sections.map((section, index) => (
     <section class:list={['content-section', 'content-section-narrow', index % 2 === 1 && 'content-section-muted']}>
       <p class="eyebrow">PVVA / Costa Rica</p>
