@@ -1,0 +1,148 @@
+---
+import PageIntro from '../PageIntro.astro';
+import AthletePhoto from './AthletePhoto.astro';
+import {
+  formatHeight,
+  formatWeight,
+  profileHref,
+  rosterHref,
+  rosterText,
+  seasonHref,
+  seasonRoster,
+  seasonsNewestFirst,
+  type Locale,
+  type Season,
+} from '../../data/roster';
+
+interface Props {
+  season: Season;
+  lang?: Locale;
+}
+
+const { season, lang = 'en' } = Astro.props;
+const t = rosterText[lang];
+const rows = seasonRoster(season);
+const hasNumbers = rows.some((row) => row.number);
+const hasSamples = rows.some((row) => row.profile.sample);
+---
+
+<PageIntro eyebrow={t.eyebrow} title={t.title} description={t.intro} number="02" photo="athletesJump" lang={lang} />
+
+<section class="roster" data-roster>
+  <div class="roster-bar">
+    <div class="roster-season">
+      <p class="eyebrow">{season.current ? t.currentSeason : t.pastSeason}</p>
+      <h2>{season.label[lang]}</h2>
+      <p class="roster-count">{t.athletes(rows.length)}</p>
+    </div>
+    <div class="roster-controls">
+      <details class="season-menu">
+        <summary><span>{t.season}:</span> {season.label[lang]}</summary>
+        <div class="season-menu-panel">
+          {seasonsNewestFirst.map((item) => (
+            <a href={seasonHref(item, lang)} aria-current={item.id === season.id ? 'page' : undefined}>
+              {item.label[lang]}
+              {item.current && <small>{t.currentSeason}</small>}
+            </a>
+          ))}
+        </div>
+      </details>
+      <div class="roster-view-toggle" role="group" aria-label={t.view} hidden>
+        <button type="button" data-view="grid" aria-pressed="true">{t.grid}</button>
+        <button type="button" data-view="list" aria-pressed="false">{t.list}</button>
+      </div>
+    </div>
+  </div>
+
+  {!season.current && (
+    <p class="roster-past-note">
+      <a class="text-link" href={rosterHref(lang)}>{t.viewCurrent} <span aria-hidden="true">→</span></a>
+    </p>
+  )}
+
+  {hasSamples && <p class="roster-sample-notice">{t.sampleNotice}</p>}
+
+  {rows.length === 0 ? (
+    <div class="empty-state"><span class="empty-state-symbol" aria-hidden="true">PV</span><div><h3>{t.empty}</h3></div></div>
+  ) : (
+    <>
+      <ul class="roster-grid" data-roster-grid>
+        {rows.map((row) => {
+          const height = formatHeight(row.profile.heightIn, lang);
+          return (
+            <li class="roster-card">
+              <a href={profileHref(row.profile, lang)}>
+                <div class="roster-card-photo">
+                  <AthletePhoto athlete={row.profile} number={row.number} />
+                  {row.number && <span class="roster-card-number" aria-hidden="true">{row.number}</span>}
+                </div>
+                <div class="roster-card-body">
+                  {row.number && <span class="visually-hidden">{t.number} {row.number}</span>}
+                  <h3>{row.profile.name}</h3>
+                  {row.position && <p class="roster-card-position">{row.position[lang]}</p>}
+                  <dl class="roster-card-facts">
+                    {height && <div><dt>{t.height}</dt><dd>{height}</dd></div>}
+                    {row.profile.hometown && <div><dt>{t.hometown}</dt><dd>{row.profile.hometown[lang]}</dd></div>}
+                  </dl>
+                  <span class="roster-card-link">{t.fullProfile} <span aria-hidden="true">→</span></span>
+                </div>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+
+      <div class="roster-table-wrap" data-roster-list hidden>
+        <table class="roster-table">
+          <caption class="visually-hidden">{season.label[lang]}</caption>
+          <thead>
+            <tr>{hasNumbers && <th scope="col">{t.number}</th>}<th scope="col">{t.name}</th><th scope="col">{t.position}</th><th scope="col">{t.height}</th><th scope="col">{t.weight}</th><th scope="col">{t.hometown}</th></tr>
+          </thead>
+          <tbody>
+            {rows.map((row) => (
+              <tr>
+                {hasNumbers && <td class="roster-table-number">{row.number ?? '—'}</td>}
+                <th scope="row"><a href={profileHref(row.profile, lang)}>{row.profile.name}</a></th>
+                <td>{row.position?.[lang] ?? '—'}</td>
+                <td>{formatHeight(row.profile.heightIn, lang) ?? '—'}</td>
+                <td>{formatWeight(row.profile.weightLb, lang) ?? '—'}</td>
+                <td>{row.profile.hometown?.[lang] ?? '—'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
+  )}
+
+  <p class="roster-consent">{t.consent}</p>
+</section>
+
+<script>
+  const roster = document.querySelector<HTMLElement>('[data-roster]');
+  const toggle = roster?.querySelector<HTMLElement>('.roster-view-toggle');
+  const grid = roster?.querySelector<HTMLElement>('[data-roster-grid]');
+  const list = roster?.querySelector<HTMLElement>('[data-roster-list]');
+
+  if (roster && toggle && grid && list) {
+    const buttons = [...toggle.querySelectorAll<HTMLButtonElement>('button')];
+    const show = (view: string) => {
+      grid.hidden = view !== 'grid';
+      list.hidden = view !== 'list';
+      buttons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.view === view)));
+      try { localStorage.setItem('pvva-roster-view', view); } catch {}
+    };
+    let saved = 'grid';
+    try { saved = localStorage.getItem('pvva-roster-view') === 'list' ? 'list' : 'grid'; } catch {}
+    toggle.hidden = false;
+    show(saved);
+    buttons.forEach((button) => button.addEventListener('click', () => show(button.dataset.view ?? 'grid')));
+  }
+
+  // Close the season menu when clicking elsewhere.
+  document.addEventListener('click', (event) => {
+    document.querySelectorAll<HTMLDetailsElement>('.season-menu[open]').forEach((menu) => {
+      if (!menu.contains(event.target as Node)) menu.open = false;
+    });
+  });
+</script>

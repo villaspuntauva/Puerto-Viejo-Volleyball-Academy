@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import JoinView from '../../components/JoinView.astro';
+import { photoAttrs } from '../../data/photos';
+const description = 'Cómo unirte a Puerto Viejo Volleyball Academy: contacta a PVVA por WhatsApp o correo, conversa sobre la opción de entrenamiento adecuada, completa el formulario de inscripción y confirma tu primera sesión.';
+---
+
+<BaseLayout lang="es" title="Únete a PVVA | Puerto Viejo Volleyball Academy" description={description} image={photoAttrs('rallyDrill').src}>
+  <JoinView lang="es" />
+</BaseLayout>

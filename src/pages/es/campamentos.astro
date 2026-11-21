@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CampsView from '../../components/CampsView.astro';
+import { photoAttrs } from '../../data/photos';
+const description = '¿Visitas Puerto Viejo? Consulta por entrenamiento privado o privado en grupo de voleibol de playa con PVVA, con entrenador y equipo incluidos. Los campamentos internacionales son un plan a futuro.';
+---
+
+<BaseLayout lang="es" title="Atletas visitantes y campamentos | PVVA" description={description} image={photoAttrs('caribbeanCourt').src}>
+  <CampsView lang="es" />
+</BaseLayout>

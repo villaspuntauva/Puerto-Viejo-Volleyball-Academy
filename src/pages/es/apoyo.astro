@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SupportView from '../../components/SupportView.astro';
+import { photoAttrs } from '../../data/photos';
+const description = 'Apoya a Puerto Viejo Volleyball Academy con una donación por PayPal o un patrocinio. Tu apoyo ayuda a nuestros atletas a entrenar y competir.';
+---
+
+<BaseLayout lang="es" title="Apoya a PVVA | Puerto Viejo Volleyball Academy" description={description} image={photoAttrs('gatherShore').src}>
+  <SupportView lang="es" />
+</BaseLayout>

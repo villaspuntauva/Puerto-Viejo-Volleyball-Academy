@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import RosterView from '../../../components/roster/RosterView.astro';
+import { currentSeason } from '../../../data/roster';
+import { photoAttrs } from '../../../data/photos';
+const description = `Roster de la ${currentSeason.label.es.toLowerCase()} de Puerto Viejo Volleyball Academy: fotos, posiciones, lugar de origen y perfiles completos de los atletas.`;
+---
+
+<BaseLayout lang="es" title={`Atletas · ${currentSeason.label.es} | Puerto Viejo Volleyball Academy`} description={description} image={photoAttrs('athletesJump').src}>
+  <RosterView season={currentSeason} lang="es" />
+</BaseLayout>

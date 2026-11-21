@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import RosterView from '../../../components/roster/RosterView.astro';
+import { seasons, type Season } from '../../../data/roster';
+import { photoAttrs } from '../../../data/photos';
+
+export function getStaticPaths() {
+  return seasons.filter((season) => !season.current).map((season) => ({ params: { season: season.id }, props: { season } }));
+}
+
+const { season } = Astro.props as { season: Season };
+---
+
+<BaseLayout title={`Athletes · ${season.label.en} | Puerto Viejo Volleyball Academy`} description={`Puerto Viejo Volleyball Academy ${season.label.en.toLowerCase()} roster.`} image={photoAttrs('athletesJump').src}>
+  <RosterView season={season} />
+</BaseLayout>

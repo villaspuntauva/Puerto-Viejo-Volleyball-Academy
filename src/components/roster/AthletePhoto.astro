@@ -1,0 +1,22 @@
+---
+import { initials, photoSrc, type Athlete } from '../../data/roster';
+
+interface Props {
+  athlete: Athlete;
+  number?: string;
+  class?: string;
+  priority?: boolean;
+}
+
+const { athlete, number, class: className, priority = false } = Astro.props;
+const src = photoSrc(athlete);
+---
+
+{src ? (
+  <img class:list={['athlete-photo', className]} src={src} alt={athlete.name} width="800" height="1000" loading={priority ? 'eager' : 'lazy'} decoding="async" />
+) : (
+  <div class:list={['athlete-photo', 'athlete-photo-placeholder', className]} role="img" aria-label={athlete.name}>
+    <img class="athlete-photo-logo" src="/pvva-logo.png" alt="" width="1254" height="1254" loading="lazy" />
+    <span class="athlete-photo-initials" aria-hidden="true">{number ? `#${number}` : initials(athlete.name)}</span>
+  </div>
+)}

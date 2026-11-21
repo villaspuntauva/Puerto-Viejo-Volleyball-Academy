@@ -1,0 +1,82 @@
+---
+import PageIntro from './PageIntro.astro';
+import type { Locale } from '../data/roster';
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = 'en' } = Astro.props;
+const es = lang === 'es';
+
+const whatsapp = es
+  ? 'https://wa.me/50660196290?text=Hola%20PVVA%2C%20me%20gustar%C3%ADa%20unirme%20a%20la%20academia.'
+  : 'https://wa.me/50660196290?text=Hi%20PVVA%2C%20I%27d%20like%20to%20join%20the%20academy.';
+const email = `mailto:pvvolleyballacademy@gmail.com?subject=${encodeURIComponent(es ? 'Inscripción en PVVA' : 'Joining PVVA')}`;
+
+const steps = es
+  ? [
+      { title: 'Contacta a PVVA', text: 'Escríbenos por WhatsApp (o por correo) para presentarte y contarnos qué buscas.' },
+      { title: 'Conversemos sobre la opción adecuada', text: 'Hablamos de tu edad, experiencia y metas para encontrar la opción de entrenamiento indicada.' },
+      { title: 'Completa el formulario de inscripción', text: 'PVVA te enviará el formulario de inscripción para que lo completes.' },
+      { title: 'Confirma tu primera sesión', text: 'Acordamos juntos la fecha y la hora de tu primera sesión.' },
+    ]
+  : [
+      { title: 'Contact PVVA', text: 'Message us on WhatsApp (or by email) to introduce yourself and tell us what you’re looking for.' },
+      { title: 'Discuss the right training option', text: 'We’ll talk through age, experience, and goals to find the right training option for you.' },
+      { title: 'Complete the registration form', text: 'PVVA will send you the registration form to complete.' },
+      { title: 'Confirm your first session', text: 'We’ll confirm the day and time of your first session together.' },
+    ];
+
+const discuss = es
+  ? ['Edad y experiencia del atleta', 'Opción de entrenamiento y metas', 'Disponibilidad para entrenar', 'Participación de madre, padre o persona encargada si el atleta es menor de edad']
+  : ['Athlete age and experience', 'Training option and goals', 'Training availability', 'Parent or guardian involvement for minors'];
+---
+
+<PageIntro
+  eyebrow={es ? 'Primer paso / Inscripción de atletas' : 'Start here / Athlete registration'}
+  title={es ? 'Da el siguiente paso.' : 'Make your move.'}
+  description={es
+    ? 'Formar parte de PVVA empieza con una conversación. Así funciona el proceso para unirte.'
+    : 'Joining PVVA starts with a conversation. Here’s how the process works.'}
+  number="08"
+  photo="rallyDrill"
+  lang={lang}
+/>
+
+<section class="join-layout">
+  <div class="join-main">
+    <p class="eyebrow">{es ? 'Cómo unirte' : 'How joining works'}</p>
+    <h2>{es ? <>Primero contáctanos.<br /><em>Luego, a la cancha.</em></> : <>Contact us first.<br /><em>Then get on court.</em></>}</h2>
+    <ol class="join-steps">
+      {steps.map((step, index) => (
+        <li><span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span><div><h3>{step.title}</h3><p>{step.text}</p></div></li>
+      ))}
+    </ol>
+    <p class="join-rule">{es
+      ? 'Los atletas nuevos deben contactar a PVVA antes de asistir a cualquier sesión.'
+      : 'New athletes must contact PVVA before attending any session.'}</p>
+    <a class="button button-dark" href={whatsapp} target="_blank" rel="noopener noreferrer">{es ? 'Escríbenos por WhatsApp' : 'Message us on WhatsApp'} <span aria-hidden="true">↗</span></a>
+    <a class="text-link" href={email}>{es ? 'O escríbenos por correo' : 'Or email the academy'} <span aria-hidden="true">→</span></a>
+  </div>
+  <aside class="join-sidebar">
+    <p class="eyebrow">{es ? 'Conversaremos sobre' : 'We’ll discuss'}</p>
+    <ul>{discuss.map((item) => <li>{item}</li>)}</ul>
+    <p class="privacy-note">{es
+      ? 'No envíes datos de contacto de emergencia ni otra información sensible en tu primer mensaje. Esos datos se incluyen en el formulario de inscripción.'
+      : 'Please don’t send emergency-contact details or other sensitive information in your first message. Those details go on the registration form.'}</p>
+    <a class="text-link" href={es ? '/es/academia/#precios' : '/academy/#pricing'}>{es ? 'Programas y precios' : 'Programs & pricing'} <span aria-hidden="true">→</span></a>
+  </aside>
+</section>
+
+<section class="content-section content-section-muted">
+  <p class="eyebrow">{es ? 'Inscripción aparte' : 'Separate registration'}</p>
+  <h2>{es ? 'Torneos, campamentos y clínicas' : 'Tournaments, camps, and clinics'}</h2>
+  <p class="section-lead">{es
+    ? 'Cada evento confirmado tendrá su propio proceso de inscripción. No hay eventos abiertos para inscripción en este momento.'
+    : 'Each confirmed event will have its own registration process. No events are currently open for registration.'}</p>
+  <div class="link-row">
+    <a class="text-link" href={es ? '/es/torneos/' : '/tournaments/'}>{es ? 'Torneos' : 'Tournament updates'} <span aria-hidden="true">→</span></a>
+    <a class="text-link" href={es ? '/es/campamentos/' : '/camps/'}>{es ? 'Visitas y campamentos' : 'Visiting athletes & camps'} <span aria-hidden="true">→</span></a>
+  </div>
+</section>

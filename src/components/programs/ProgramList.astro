@@ -1,0 +1,46 @@
+---
+import { formatCRC, formatUSD, programs, programText } from '../../data/programs';
+import type { Locale } from '../../data/roster';
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = 'en' } = Astro.props;
+const t = programText[lang];
+---
+
+<div class="program-list">
+  {programs.map((program) => (
+    <article class="program-row" id={program.id}>
+      <span>{program.number}</span>
+      <div>
+        <h3>{program.name[lang]}</h3>
+        <p class="program-audience">{program.audience[lang]}</p>
+        <p>{program.description[lang]}</p>
+        {program.pathways && (
+          <div class="program-pathways">
+            <p class="program-pathways-label">{t.pathways}</p>
+            <ul>
+              {program.pathways.map((pathway) => <li><strong>{pathway.name[lang]}</strong> {pathway.description[lang]}</li>)}
+            </ul>
+            {program.pathwayNote && <p class="program-pathways-note">{program.pathwayNote[lang]}</p>}
+          </div>
+        )}
+        {program.prices ? (
+          <ul class="program-prices">
+            {program.prices.map((price) => (
+              <li>
+                {program.prices!.length > 1 && <span>{price.label[lang].split('—').at(-1)!.trim()}</span>}
+                <strong>{formatCRC(price.crc, lang)}{price.per?.[lang]}</strong>
+                <small>{formatUSD(price.crc)}{price.per?.[lang]}</small>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          program.priceNote && <small>{program.priceNote[lang]}</small>
+        )}
+      </div>
+    </article>
+  ))}
+</div>

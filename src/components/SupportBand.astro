@@ -1,0 +1,25 @@
+---
+import { site } from '../data/site';
+import type { Locale } from '../data/roster';
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = 'en' } = Astro.props;
+const es = lang === 'es';
+---
+
+<section class="support-band" aria-labelledby="support-band-title">
+  <div>
+    <p class="eyebrow">{es ? 'Apoya a PVVA' : 'Support PVVA'}</p>
+    <h2 id="support-band-title">{es ? 'Ayuda a nuestros atletas a entrenar y competir.' : 'Help our athletes train and compete.'}</h2>
+    <p>{es
+      ? 'Las donaciones y los patrocinios financian equipo, competencias y oportunidades para el talento local.'
+      : 'Donations and sponsorships fund equipment, competition, and opportunities for local talent.'}</p>
+  </div>
+  <div class="support-band-actions">
+    <a class="button button-dark" href={site.paypalUrl} target="_blank" rel="noopener noreferrer">{es ? 'Donar' : 'Donate'} <span aria-hidden="true">↗</span></a>
+    <a class="text-link" href={es ? '/es/apoyo/' : '/support/'}>{es ? 'Donaciones y patrocinios' : 'Donations & sponsorship'} <span aria-hidden="true">→</span></a>
+  </div>
+</section>

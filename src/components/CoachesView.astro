@@ -1,0 +1,54 @@
+---
+import PageIntro from './PageIntro.astro';
+import { coaches, coachText } from '../data/coaches';
+import type { Locale } from '../data/roster';
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = 'en' } = Astro.props;
+const t = coachText[lang];
+const digits = (phone: string) => phone.replace(/\D/g, '');
+---
+
+<PageIntro eyebrow={t.eyebrow} title={t.title} description={t.intro} number="03" photo="coachBriefing" lang={lang} />
+
+{coaches.map((coach) => (
+  <article class="coach-entry" id={coach.slug}>
+    <section class="profile-hero">
+      <div class="profile-hero-inner">
+        <div class="coach-entry-heading">
+          <div class="profile-heading">
+            <p class="eyebrow">{coach.title[lang]}</p>
+            <h2 class="coach-entry-name">{coach.name}</h2>
+            <dl class="profile-facts">
+              <div><dt>{t.titleLabel}</dt><dd>{coach.title[lang]}</dd></div>
+              {coach.hometown && <div><dt>{t.hometown}</dt><dd>{coach.hometown[lang]}</dd></div>}
+              {coach.email && <div><dt>{t.email}</dt><dd><a href={`mailto:${coach.email}`}>{coach.email}</a></dd></div>}
+              {coach.phone && <div><dt>{t.phone}</dt><dd><a href={`https://wa.me/${digits(coach.phone)}`} target="_blank" rel="noopener noreferrer">{coach.phone}</a></dd></div>}
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="coach-entry-body">
+      {coach.photo && (
+        <figure class="coach-entry-photo">
+          <img src={`/images/coaches/${coach.photo}`} alt={coach.name} width="800" height="931" loading="eager" />
+        </figure>
+      )}
+      <div class="coach-entry-bio">
+        <p class="eyebrow">PVVA / {coach.name}</p>
+        <h2>{t.biography}</h2>
+        {coach.bio[lang].map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </section>
+  </article>
+))}
+
+<section class="content-section content-section-narrow">
+  <p class="eyebrow">{t.growingEyebrow}</p>
+  <h2>{t.growingTitle}</h2>
+  <p class="section-lead">{t.growingText}</p>
+</section>

@@ -1,0 +1,68 @@
+---
+import PageIntro from './PageIntro.astro';
+import type { Locale } from '../data/roster';
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = 'en' } = Astro.props;
+const es = lang === 'es';
+
+const privateHref = es
+  ? 'https://wa.me/50660196290?text=Hola%20PVVA%2C%20visitar%C3%A9%20Puerto%20Viejo%20y%20me%20interesa%20el%20entrenamiento%20privado%20de%20voleibol%20de%20playa.'
+  : 'https://wa.me/50660196290?text=Hi%20PVVA%2C%20I%27m%20visiting%20Puerto%20Viejo%20and%20I%27m%20interested%20in%20private%20beach%20volleyball%20training.';
+const campsHref = es
+  ? 'https://wa.me/50660196290?text=Hola%20PVVA%2C%20me%20interesan%20los%20futuros%20campamentos%20internacionales.'
+  : 'https://wa.me/50660196290?text=Hi%20PVVA%2C%20I%27m%20interested%20in%20future%20international%20camps.';
+const programsHref = es ? '/es/academia/#private-training' : '/academy/#private-training';
+---
+
+<PageIntro
+  eyebrow={es ? 'Atletas visitantes y campamentos / Costa Rica' : 'Visiting athletes & camps / Costa Rica'}
+  title={es ? 'Entrena en el Caribe.' : 'Train in the Caribbean.'}
+  description={es
+    ? 'Los atletas y grupos que visitan Puerto Viejo ya pueden entrenar con PVVA. Los campamentos internacionales son un plan a futuro.'
+    : 'Visiting athletes and groups can train with PVVA now. International camps are a plan for the future.'}
+  number="05"
+  photo="caribbeanCourt"
+  lang={lang}
+/>
+
+<section class="visit-now">
+  <div class="visit-now-copy">
+    <p class="eyebrow">{es ? 'Disponible ahora' : 'Available now'}</p>
+    <h2>{es ? <>Entrenamiento privado<br /><em>para visitantes.</em></> : <>Private training<br /><em>for visitors.</em></>}</h2>
+    <p>{es
+      ? 'Los atletas y grupos que visitan Puerto Viejo pueden consultar por entrenamiento privado o privado en grupo de voleibol de playa, con la dirección del entrenador principal de PVVA, Yulius Brown Rudolf, y el equipo incluido.'
+      : 'Visiting athletes and groups can inquire about private and private-group beach volleyball training, coached by PVVA founder and head coach Yulius Brown Rudolf, with equipment provided.'}</p>
+    <div class="hero-actions">
+      <a class="button button-dark" href={privateHref} target="_blank" rel="noopener noreferrer">{es ? 'Consultar por entrenamiento privado' : 'Inquire about private training'} <span aria-hidden="true">↗</span></a>
+      <a class="text-link" href={programsHref}>{es ? 'Ver las opciones privadas' : 'See private training options'} <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+  <ul class="visit-now-list">
+    <li><strong>{es ? 'Entrenamiento privado' : 'Private Training'}</strong><span>{es ? 'Sesiones individuales' : 'One-on-one sessions'}</span></li>
+    <li><strong>{es ? 'Entrenamiento privado en grupo' : 'Private Group Training'}</strong><span>{es ? 'Para tu pareja o grupo' : 'For your pair or group'}</span></li>
+    <li><strong>{es ? 'Entrenador y equipo incluidos' : 'Coaching & equipment provided'}</strong><span>Playa Cocles, Puerto Viejo</span></li>
+  </ul>
+</section>
+
+<section class="camp-feature">
+  <div class="camp-feature-copy">
+    <p class="eyebrow">{es ? 'Planes a futuro' : 'Future plans'}</p>
+    <h2>{es ? <>Campamentos<br /><em>internacionales.</em></> : <>International<br /><em>camps.</em></>}</h2>
+    <p>{es
+      ? 'PVVA planea recibir campamentos internacionales de voleibol de playa en Puerto Viejo en el futuro. Todavía no hay campamentos programados. Si te interesa, escríbenos y te avisaremos cuando haya novedades.'
+      : 'PVVA plans to host international beach volleyball camps in Puerto Viejo in the future. No camps are scheduled yet. If you’re interested, get in touch and we’ll let you know when there’s news.'}</p>
+    <a class="button button-light" href={campsHref} target="_blank" rel="noopener noreferrer">{es ? 'Consultar por futuros campamentos' : 'Inquire About Future Camps'} <span aria-hidden="true">↗</span></a>
+  </div>
+  <div class="camp-feature-meta">
+    <p class="eyebrow">{es ? 'Estado' : 'Status'}</p>
+    <dl>
+      <div><dt>{es ? 'Campamentos internacionales' : 'International camps'}</dt><dd>{es ? 'Plan a futuro' : 'Future plan'}</dd></div>
+      <div><dt>{es ? 'Fechas' : 'Dates'}</dt><dd>{es ? 'Aún no programadas' : 'Not yet scheduled'}</dd></div>
+      <div><dt>{es ? 'Para entrenar ahora' : 'To train now'}</dt><dd><a href={programsHref}>{es ? 'Entrenamiento privado' : 'Private training'}</a></dd></div>
+    </dl>
+  </div>
+</section>

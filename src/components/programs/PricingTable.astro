@@ -1,0 +1,36 @@
+---
+import { formatCRC, formatUSD, programs, programText } from '../../data/programs';
+import type { Locale } from '../../data/roster';
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = 'en' } = Astro.props;
+const t = programText[lang];
+const rows = programs.flatMap((program) => program.prices ?? []);
+---
+
+<section class="content-section pricing-section" id={lang === 'es' ? 'precios' : 'pricing'}>
+  <p class="eyebrow">{t.pricing}</p>
+  <h2>{t.pricingTitle}</h2>
+  <div class="pricing-table-wrap">
+    <table class="pricing-table">
+      <thead><tr><th scope="col">{t.program}</th><th scope="col">{t.crc}</th><th scope="col">{t.usd}</th></tr></thead>
+      <tbody>
+        {rows.map((price) => (
+          <tr>
+            <th scope="row">{price.label[lang]}</th>
+            <td>{formatCRC(price.crc, lang)}{price.per?.[lang]}</td>
+            <td>{formatUSD(price.crc)}{price.per?.[lang]}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <ul class="pricing-notes">
+    <li>{t.onRequest}</li>
+    <li>{t.rate}</li>
+    <li>{t.payment}</li>
+  </ul>
+</section>

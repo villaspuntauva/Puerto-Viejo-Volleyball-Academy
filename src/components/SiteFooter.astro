@@ -1,4 +1,6 @@
 ---
+import { site } from '../data/site';
+
 interface Props {
   lang?: 'en' | 'es';
 }
@@ -9,17 +11,19 @@ const footerLinks = isSpanish
   ? [
       { href: '/es/academia/', label: 'Academia' },
       { href: '/es/horarios/', label: 'Horarios' },
-      { href: '/es/campamentos/', label: 'Campamentos' },
+      { href: '/es/campamentos/', label: 'Visitas y campamentos' },
       { href: '/es/torneos/', label: 'Torneos' },
       { href: '/es/galeria/', label: 'Galería' },
+      { href: '/es/apoyo/', label: 'Apoya a PVVA' },
       { href: '/es/contacto/', label: 'Contacto' },
     ]
   : [
       { href: '/academy/', label: 'Academy' },
       { href: '/schedule/', label: 'Schedule' },
-      { href: '/camps/', label: 'Camps' },
+      { href: '/camps/', label: 'Visitors & camps' },
       { href: '/tournaments/', label: 'Tournaments' },
       { href: '/gallery/', label: 'Gallery' },
+      { href: '/support/', label: 'Support PVVA' },
       { href: '/contact/', label: 'Contact' },
     ];
 ---
@@ -37,7 +41,9 @@ const footerLinks = isSpanish
     </div>
     <div class="footer-contact">
       <a href="mailto:pvvolleyballacademy@gmail.com">pvvolleyballacademy@gmail.com</a>
-      <a href="https://wa.me/50664880471">WhatsApp +506 6488 0471</a>
+      <a href="https://wa.me/50660196290">WhatsApp +506 6019 6290</a>
+      <a href={site.instagramUrl} target="_blank" rel="noopener noreferrer">Instagram {site.instagramHandle}</a>
+      <span>{isSpanish ? 'SINPE Móvil / depósito bancario: +506 6019 6290' : 'SINPE Móvil / bank deposit: +506 6019 6290'}</span>
       <span>{isSpanish ? 'Playa Cocles, Puerto Viejo, Limón, Costa Rica' : 'Playa Cocles, Puerto Viejo, Limón, Costa Rica'}</span>
     </div>
   </div>

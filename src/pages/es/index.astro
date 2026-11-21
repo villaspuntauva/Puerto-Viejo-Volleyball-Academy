@@ -4,6 +4,9 @@ import VerticalCarousel from '../../components/VerticalCarousel.astro';
 import { photoAttrs, verticalPhotoKeys } from '../../data/photos';
 const carouselPhotos = verticalPhotoKeys.filter((key) => key !== 'defenseDrill');
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { programs, priceSummary } from '../../data/programs';
+import { site } from '../../data/site';
+import SupportBand from '../../components/SupportBand.astro';
 
 const description = 'Puerto Viejo Volleyball Academy desarrolla atletas de voleibol de playa mediante entrenamiento, competencia y comunidad en Playa Cocles, Puerto Viejo, Costa Rica.';
 const organization = {
@@ -14,7 +17,7 @@ const organization = {
   url: 'https://www.pvvolleyballacademy.com/',
   description,
   email: 'pvvolleyballacademy@gmail.com',
-  telephone: '+506 6488 0471',
+  telephone: '+506 6019 6290',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Puerto Viejo de Talamanca',
@@ -47,15 +50,15 @@ const organization = {
       <figure class="intro-photo"><Photo photo="defenseDrill" lang="es" /></figure>
     </div>
     <div class="intro-content">
+      <img class="intro-logo" src="/pvva-logo.png" alt="" width="1254" height="1254" loading="lazy" />
       <p class="eyebrow">Un lugar para desarrollarse</p>
       <h2>Voleibol de playa serio.<br /><span>Con raíces caribeñas.</span></h2>
       <div class="intro-columns">
-        <p>Puerto Viejo Volleyball Academy está creando un entorno de voleibol de playa en el Caribe de Costa Rica para que los atletas entrenen, se desarrollen y compitan.</p>
-        <p>Desde atletas en formación hasta jugadores competitivos, PVVA reúne a la comunidad mediante entrenamientos estructurados y una cultura de equipo.</p>
+        <p>PVVA desarrolla atletas de voleibol de playa en Puerto Viejo y las comunidades cercanas mediante entrenamiento estructurado, trabajo en equipo y competencia.</p>
+        <p>Creamos oportunidades para el talento local y recibimos a atletas y grupos visitantes que quieran entrenar con nosotros.</p>
       </div>
       <a class="text-link" href="/es/academia/">Cómo funciona la academia <span aria-hidden="true">→</span></a>
     </div>
-    <div class="intro-stamp" aria-hidden="true"><span>PVVA</span><small>CARIBE<br />COSTA RICA</small></div>
   </section>
 
   <section class="program-section" aria-labelledby="programs-title">
@@ -64,17 +67,25 @@ const organization = {
       <p>Atletas distintos. Metas distintas. El compromiso compartido de mejorar.</p>
     </div>
     <div class="program-grid">
-      <article class="program-card"><span class="program-number">01</span><div><p class="program-audience">Atletas jóvenes y en desarrollo</p><h3>Future</h3><p>Una base para desarrollar habilidades, confianza y una mentalidad de equipo.</p></div><span class="program-status">Detalles por confirmar</span></article>
-      <article class="program-card"><span class="program-number">02</span><div><p class="program-audience">Atletas avanzados y competitivos</p><h3>Premier</h3><p>Una ruta de mayor intensidad para atletas con objetivos de competencia.</p></div><span class="program-status">Detalles por confirmar</span></article>
-      <article class="program-card"><span class="program-number">03</span><div><p class="program-audience">Desarrollo enfocado</p><h3>Individual</h3><p>Entrenamiento individual o en grupos pequeños según las metas del atleta.</p></div><span class="program-status">Disponibilidad por consulta</span></article>
-      <article class="program-card"><span class="program-number">04</span><div><p class="program-audience">Desarrollo de habilidades</p><h3>Especializado</h3><p>Bloqueo, defensa, saque, ataque y preparación física; detalles por confirmar.</p></div><span class="program-status">Detalles por confirmar</span></article>
+      {programs.map((program) => (
+        <article class="program-card">
+          <span class="program-number">{program.number}</span>
+          <div>
+            <p class="program-audience">{program.audience.es}</p>
+            <h3>{program.name.es}</h3>
+            <p>{program.description.es}</p>
+            {program.pathways && <p class="program-card-pathways">{program.pathways.map((p) => p.name.es).join(' · ')}</p>}
+          </div>
+          <span class="program-status">{priceSummary(program, 'es')}</span>
+        </article>
+      ))}
     </div>
-    <a class="text-link" href="/es/academia/">Explorar los programas <span aria-hidden="true">→</span></a>
+    <a class="text-link" href="/es/academia/">Programas y precios <span aria-hidden="true">→</span></a>
   </section>
 
   <section class="destination" aria-labelledby="destination-title">
     <div class="destination-copy">
-      <p class="eyebrow">Entrena en el Caribe</p><h2 id="destination-title">Un lugar distinto<br />para jugar. Un lugar<br /><em>serio para crecer.</em></h2><p>La visión de PVVA es recibir a atletas, equipos y entrenadores en Puerto Viejo para entrenar voleibol de playa, participar en campamentos y competir.</p><a class="button button-outline" href="/es/campamentos/">Conocer campamentos <span aria-hidden="true">↗</span></a>
+      <p class="eyebrow">Entrena en el Caribe</p><h2 id="destination-title">Un lugar distinto<br />para jugar. Un lugar<br /><em>serio para crecer.</em></h2><p>¿Visitas Puerto Viejo? Los atletas y grupos ya pueden reservar entrenamiento privado o privado en grupo de voleibol de playa con PVVA. Los campamentos internacionales forman parte de la visión a largo plazo de la academia.</p><a class="button button-outline" href="/es/campamentos/">Entrena con PVVA como visitante <span aria-hidden="true">→</span></a>
       <p class="destination-place">COSTA CARIBEÑA · COSTA RICA</p>
     </div>
     <VerticalCarousel photos={carouselPhotos} lang="es" label="Entrenamientos de PVVA en Playa Cocles" />
@@ -88,7 +99,7 @@ const organization = {
 
   <section class="whats-on" aria-labelledby="whats-on-title">
     <div class="section-heading section-heading-compact"><div><p class="eyebrow">En la arena</p><h2 id="whats-on-title">Lo que viene</h2></div><a class="text-link" href="/es/eventos/">Eventos y novedades <span aria-hidden="true">→</span></a></div>
-    <div class="event-placeholder"><span class="event-mark" aria-hidden="true">PVVA<br />HOY</span><div><p class="eyebrow">Próximamente</p><h3>Sigue el crecimiento de la academia.</h3><p>Los próximos campamentos, torneos y sesiones especiales se anunciarán aquí.</p></div><a class="button button-dark" href="https://wa.me/50664880471?text=Hola%20PVVA%2C%20quiero%20informaci%C3%B3n%20sobre%20pr%C3%B3ximos%20eventos.">Consultar eventos <span aria-hidden="true">↗</span></a></div>
+    <div class="event-placeholder"><span class="event-mark" aria-hidden="true">PVVA<br />HOY</span><div><p class="eyebrow">Noticias y resultados</p><h3>Sigue a PVVA dentro y fuera de la arena.</h3><p>Los resultados de torneos, eventos y noticias de la academia se publican aquí y en Instagram <a href={site.instagramUrl} target="_blank" rel="noopener noreferrer">{site.instagramHandle}</a>.</p></div><a class="button button-dark" href="https://wa.me/50660196290?text=Hola%20PVVA%2C%20quiero%20informaci%C3%B3n%20sobre%20pr%C3%B3ximos%20eventos.">Consultar eventos <span aria-hidden="true">↗</span></a></div>
   </section>
 
   <section class="coach-strip" aria-labelledby="coach-title">
@@ -99,7 +110,9 @@ const organization = {
     </div>
   </section>
 
+  <SupportBand lang="es" />
+
   <section class="home-cta home-cta-photo">
     <Photo class="cta-bg" photo="sunsetBall" lang="es" />
-    <div class="cta-shade" aria-hidden="true"></div><p class="eyebrow">Tu próximo rally empieza aquí</p><h2>¿Listo para jugar<br /><em>con propósito?</em></h2><p>Conversemos sobre el programa adecuado para ti.</p><div class="hero-actions"><a class="button button-light" href="/es/inscripcion/">Únete a PVVA <span aria-hidden="true">↗</span></a><a class="text-link text-link-light" href="https://wa.me/50664880471?text=Hola%20PVVA%2C%20quiero%20informaci%C3%B3n%20para%20unirme.">Escríbenos por WhatsApp <span aria-hidden="true">→</span></a></div></section>
+    <div class="cta-shade" aria-hidden="true"></div><p class="eyebrow">Tu próximo rally empieza aquí</p><h2>¿Listo para jugar<br /><em>con propósito?</em></h2><p>Conversemos sobre el programa adecuado para ti.</p><div class="hero-actions"><a class="button button-light" href="/es/inscripcion/">Únete a PVVA <span aria-hidden="true">↗</span></a><a class="text-link text-link-light" href="https://wa.me/50660196290?text=Hola%20PVVA%2C%20quiero%20informaci%C3%B3n%20para%20unirme.">Escríbenos por WhatsApp <span aria-hidden="true">→</span></a></div></section>
 </BaseLayout>

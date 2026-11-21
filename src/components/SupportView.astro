@@ -1,0 +1,76 @@
+---
+import PageIntro from './PageIntro.astro';
+import { site, whatsappLink } from '../data/site';
+import type { Locale } from '../data/roster';
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = 'en' } = Astro.props;
+const es = lang === 'es';
+
+const helps = es
+  ? [
+      { title: 'Equipo de entrenamiento', text: 'Balones, redes y material para que cada sesión funcione bien.' },
+      { title: 'Competencia', text: 'Inscripciones y traslados para que los atletas compitan en Costa Rica y en el extranjero.' },
+      { title: 'Oportunidades locales', text: 'Más oportunidades para que los jóvenes de Puerto Viejo entrenen y crezcan con el deporte.' },
+    ]
+  : [
+      { title: 'Training equipment', text: 'Balls, nets, and gear that keep every session running.' },
+      { title: 'Competition', text: 'Entry fees and travel so athletes can compete in Costa Rica and abroad.' },
+      { title: 'Local opportunity', text: 'More chances for young people in Puerto Viejo to train and grow through sport.' },
+    ];
+
+const sponsorMail = `mailto:${site.email}?subject=${encodeURIComponent(es ? 'Patrocinio de PVVA' : 'PVVA sponsorship inquiry')}`;
+const sponsorWhatsapp = whatsappLink(es ? 'Hola PVVA, me interesa patrocinar a la academia.' : 'Hi PVVA, I’m interested in sponsoring the academy.');
+---
+
+<PageIntro
+  eyebrow={es ? 'Apoya a PVVA' : 'Support PVVA'}
+  title={es ? 'Ayuda a crecer el juego.' : 'Help grow the game.'}
+  description={es
+    ? 'Las donaciones y los patrocinios ayudan a los atletas de PVVA a entrenar, competir y crecer en el Caribe de Costa Rica.'
+    : 'Donations and sponsorships help PVVA athletes train, compete, and grow in the Caribbean of Costa Rica.'}
+  number="11"
+  photo="gatherShore"
+  lang={lang}
+/>
+
+<section class="content-section support-helps">
+  <p class="eyebrow">{es ? 'Cómo ayuda tu apoyo' : 'How support helps'}</p>
+  <h2>{es ? 'Directo a la arena.' : 'Straight to the sand.'}</h2>
+  <ul class="support-helps-grid">
+    {helps.map((item, index) => (
+      <li><span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span><h3>{item.title}</h3><p>{item.text}</p></li>
+    ))}
+  </ul>
+</section>
+
+<section class="support-options">
+  <article class="support-donate" id={es ? 'donar' : 'donate'}>
+    <p class="eyebrow">{es ? 'Donaciones' : 'Donations'}</p>
+    <h2>{es ? 'Dona con PayPal.' : 'Donate with PayPal.'}</h2>
+    <p>{es
+      ? 'Escanea el código QR o, si estás en tu teléfono, toca el botón para donar directamente.'
+      : 'Scan the QR code, or tap the button to donate directly if you’re on your phone.'}</p>
+    <div class="support-donate-row">
+      <img class="support-qr" src={site.paypalQr} width="259" height="259" alt={es ? 'Código QR para donar a PVVA por PayPal' : 'QR code to donate to PVVA through PayPal'} loading="lazy" />
+      <div>
+        <a class="button button-light" href={site.paypalUrl} target="_blank" rel="noopener noreferrer">{es ? 'Donar con PayPal' : 'Donate with PayPal'} <span aria-hidden="true">↗</span></a>
+        <p class="support-small">{es ? 'Los pagos se procesan a través de PayPal.' : 'Payments are processed by PayPal.'}<br /><span class="support-url">paypal.me/pvvolleyballacademy</span></p>
+      </div>
+    </div>
+  </article>
+  <article class="support-sponsor" id={es ? 'patrocinio' : 'sponsorship'}>
+    <p class="eyebrow">{es ? 'Patrocinios' : 'Sponsorship'}</p>
+    <h2>{es ? 'Patrocina a PVVA.' : 'Sponsor PVVA.'}</h2>
+    <p>{es
+      ? 'Empresas, organizaciones y personas que quieran apoyar a la academia pueden escribirnos para conversar sobre oportunidades de patrocinio.'
+      : 'Businesses, organizations, and individuals who would like to support the academy can contact us to talk about sponsorship opportunities.'}</p>
+    <div class="hero-actions">
+      <a class="button button-dark" href={sponsorWhatsapp} target="_blank" rel="noopener noreferrer">{es ? 'Escribir por WhatsApp' : 'Message us on WhatsApp'} <span aria-hidden="true">↗</span></a>
+      <a class="text-link" href={sponsorMail}>{es ? 'Escribir por correo' : 'Email the academy'} <span aria-hidden="true">→</span></a>
+    </div>
+  </article>
+</section>

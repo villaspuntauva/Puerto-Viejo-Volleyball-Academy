@@ -1,0 +1,136 @@
+---
+import AthletePhoto from './AthletePhoto.astro';
+import {
+  athleteSeasons,
+  formatHeight,
+  formatWeight,
+  isCurrentAthlete,
+  profileHref,
+  rosterHref,
+  rosterText,
+  seasonHref,
+  seasonRoster,
+  type Athlete,
+  type Locale,
+} from '../../data/roster';
+
+interface Props {
+  athlete: Athlete;
+  lang?: Locale;
+}
+
+const { athlete, lang = 'en' } = Astro.props;
+const t = rosterText[lang];
+const history = athleteSeasons(athlete.slug);
+const latest = history[0];
+const isCurrent = isCurrentAthlete(athlete.slug);
+const backHref = latest ? seasonHref(latest.season, lang) : rosterHref(lang);
+
+const facts = [
+  { label: t.position, value: latest?.entry.position?.[lang] },
+  { label: t.height, value: formatHeight(athlete.heightIn, lang) },
+  { label: t.weight, value: formatWeight(athlete.weightLb, lang) },
+  { label: t.hometown, value: athlete.hometown?.[lang] },
+].filter((fact) => fact.value);
+
+const info = [
+  { label: t.fullName, value: athlete.fullName !== athlete.name ? athlete.fullName : undefined },
+  { label: t.yearOfBirth, value: athlete.yearOfBirth?.toString() },
+  { label: t.experience, value: athlete.experience?.[lang] },
+  { label: t.currentClub, value: athlete.currentClub },
+  { label: athlete.previousClubs && athlete.previousClubs.length > 1 ? t.previousClubs : t.previousClub, value: athlete.previousClubs?.join(', ') },
+].filter((fact) => fact.value);
+
+// Previous / next athlete within the season this profile is shown under.
+const teammates = latest ? seasonRoster(latest.season) : [];
+const index = teammates.findIndex((row) => row.athlete === athlete.slug);
+const prev = index > 0 ? teammates[index - 1] : undefined;
+const next = index >= 0 && index < teammates.length - 1 ? teammates[index + 1] : undefined;
+const historyHasNumbers = history.some(({ entry }) => entry.number);
+const bio = athlete.bio?.[lang]?.length ? athlete.bio[lang] : athlete.bio?.en;
+---
+
+<section class="profile-hero">
+  <div class="profile-hero-inner">
+    <a class="text-link text-link-light profile-back" href={backHref}><span aria-hidden="true">←</span> {t.backToRoster}{latest && ` · ${latest.season.label[lang]}`}</a>
+    <div class="profile-hero-grid">
+      <div class="profile-photo">
+        <AthletePhoto athlete={athlete} number={latest?.entry.number} priority />
+      </div>
+      <div class="profile-heading">
+        {athlete.sample && <span class="profile-sample-tag">{t.sampleProfile}</span>}
+        <p class="eyebrow">
+          {isCurrent ? latest?.season.label[lang] : `${t.formerAthlete} · ${t.lastSeason}: ${latest?.season.label[lang]}`}
+        </p>
+        <h1>
+          {latest?.entry.number && <span class="profile-number">#{latest.entry.number}</span>}
+          {athlete.name}
+        </h1>
+        {facts.length > 0 && (
+          <dl class="profile-facts">
+            {facts.map((fact) => <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}
+          </dl>
+        )}
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="profile-body">
+  <section class="profile-section profile-bio">
+    <p class="eyebrow">PVVA / {athlete.name}</p>
+    <h2>{t.biography}</h2>
+    {bio?.length ? bio.map((paragraph) => <p>{paragraph}</p>) : <p class="profile-muted">{t.bioPending}</p>}
+  </section>
+
+  <aside class="profile-side">
+    {info.length > 0 && (
+      <section class="profile-section">
+        <h2>{t.playerInfo}</h2>
+        <dl class="profile-info">
+          {info.map((fact) => <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}
+        </dl>
+      </section>
+    )}
+
+    {athlete.achievements && athlete.achievements.length > 0 && (
+      <section class="profile-section">
+        <h2>{athlete.achievementsTitle?.[lang] ?? t.achievementsDefault}</h2>
+        <ul class="profile-achievements">
+          {athlete.achievements.map((item) => (
+            <li><span>{item.year ?? ''}</span>{item.text[lang]}</li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {history.length > 0 && (
+      <section class="profile-section">
+        <h2>{t.seasonHistory}</h2>
+        <table class="profile-history">
+          <thead><tr><th scope="col">{t.season}</th>{historyHasNumbers && <th scope="col">{t.number}</th>}<th scope="col">{t.position}</th></tr></thead>
+          <tbody>
+            {history.map(({ season, entry }) => (
+              <tr>
+                <th scope="row"><a href={seasonHref(season, lang)}>{season.label[lang]}</a></th>
+                {historyHasNumbers && <td>{entry.number ?? '—'}</td>}
+                <td>{entry.position?.[lang] ?? '—'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+    )}
+  </aside>
+</div>
+
+{(prev || next) && (
+  <nav class="profile-pager" aria-label={latest?.season.label[lang]}>
+    {prev ? (
+      <a href={profileHref(prev.profile, lang)} rel="prev"><small><span aria-hidden="true">←</span> {t.previous}</small><strong>{prev.profile.name}</strong></a>
+    ) : <span></span>}
+    {next && (
+      <a class="profile-pager-next" href={profileHref(next.profile, lang)} rel="next"><small>{t.next} <span aria-hidden="true">→</span></small><strong>{next.profile.name}</strong></a>
+    )}
+  </nav>
+)}

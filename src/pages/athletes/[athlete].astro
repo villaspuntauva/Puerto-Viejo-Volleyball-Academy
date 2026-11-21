@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AthleteProfile from '../../components/roster/AthleteProfile.astro';
+import { athleteSeasons, listedAthletes, photoSrc, type Athlete } from '../../data/roster';
+import { photoAttrs } from '../../data/photos';
+
+export function getStaticPaths() {
+  return listedAthletes.map((athlete) => ({ params: { athlete: athlete.slug }, props: { athlete } }));
+}
+
+const { athlete } = Astro.props as { athlete: Athlete };
+const latest = athleteSeasons(athlete.slug)[0];
+const position = latest?.entry.position?.en;
+const description = [`${athlete.name}${position ? `, ${position.toLowerCase()}` : ''} with Puerto Viejo Volleyball Academy`, athlete.hometown && `from ${athlete.hometown.en}`].filter(Boolean).join(' ') + '.';
+---
+
+<BaseLayout title={`${athlete.name} | PVVA Athletes`} description={description} image={photoSrc(athlete) ?? photoAttrs('athletesJump').src} noindex={athlete.sample}>
+  <AthleteProfile athlete={athlete} />
+</BaseLayout>
