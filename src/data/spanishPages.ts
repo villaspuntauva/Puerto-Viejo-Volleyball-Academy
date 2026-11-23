@@ -22,17 +22,17 @@ export interface SpanishPage {
 export const spanishPages: Record<string, SpanishPage> = {
   horarios: {
     title: 'Horarios de entrenamiento | Puerto Viejo Volleyball Academy',
-    description: 'Horario general de entrenamiento de Puerto Viejo Volleyball Academy en Playa Cocles: de lunes a jueves, entre las 3:00 y las 5:30 p. m.',
+    description: 'Horario general de entrenamiento de Puerto Viejo Volleyball Academy en Playa Cocles: de lunes a sábado, entre las 3:00 y las 5:30 p. m.',
     eyebrow: 'Entrenamientos / Playa Cocles',
     heading: 'Haz espacio para la próxima repetición.',
-    intro: 'Las sesiones generalmente se realizan de lunes a jueves por la tarde en Playa Cocles.',
+    intro: 'Las sesiones generalmente se realizan de lunes a sábado por la tarde en Playa Cocles.',
     number: '04',
     photo: 'settingPractice',
     sections: [
       {
         title: 'Horario general de entrenamiento',
         paragraphs: [
-          'Las sesiones generalmente se realizan de lunes a jueves, entre las 3:00 y las 5:30 p. m. Contacta a PVVA para confirmar la disponibilidad actual y el horario de tu sesión.',
+          'Las sesiones generalmente se realizan de lunes a sábado, entre las 3:00 y las 5:30 p. m. Contacta a PVVA para confirmar la disponibilidad actual y el horario de tu sesión.',
           'Zona de entrenamiento: Playa Cocles, Puerto Viejo. Zona horaria: hora de Costa Rica, UTC−6.',
         ],
       },

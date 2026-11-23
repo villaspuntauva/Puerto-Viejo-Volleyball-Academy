@@ -10,6 +10,7 @@ import {
   rosterText,
   seasonHref,
   seasonRoster,
+  sortedAchievements,
   type Athlete,
   type Locale,
 } from '../../data/roster';
@@ -47,57 +48,58 @@ const index = teammates.findIndex((row) => row.athlete === athlete.slug);
 const prev = index > 0 ? teammates[index - 1] : undefined;
 const next = index >= 0 && index < teammates.length - 1 ? teammates[index + 1] : undefined;
 const historyHasNumbers = history.some(({ entry }) => entry.number);
+const achievements = sortedAchievements(athlete);
 const bio = athlete.bio?.[lang]?.length ? athlete.bio[lang] : athlete.bio?.en;
 ---
 
 <section class="profile-hero">
   <div class="profile-hero-inner">
     <a class="text-link text-link-light profile-back" href={backHref}><span aria-hidden="true">←</span> {t.backToRoster}{latest && ` · ${latest.season.label[lang]}`}</a>
-    <div class="profile-hero-grid">
-      <div class="profile-photo">
-        <AthletePhoto athlete={athlete} number={latest?.entry.number} priority />
-      </div>
-      <div class="profile-heading">
-        {athlete.sample && <span class="profile-sample-tag">{t.sampleProfile}</span>}
-        <p class="eyebrow">
-          {isCurrent ? latest?.season.label[lang] : `${t.formerAthlete} · ${t.lastSeason}: ${latest?.season.label[lang]}`}
-        </p>
-        <h1>
-          {latest?.entry.number && <span class="profile-number">#{latest.entry.number}</span>}
-          {athlete.name}
-        </h1>
-        {facts.length > 0 && (
-          <dl class="profile-facts">
-            {facts.map((fact) => <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}
-          </dl>
-        )}
-      </div>
+    <div class="profile-heading">
+      {athlete.sample && <span class="profile-sample-tag">{t.sampleProfile}</span>}
+      <p class="eyebrow">
+        {isCurrent ? latest?.season.label[lang] : `${t.formerAthlete} · ${t.lastSeason}: ${latest?.season.label[lang]}`}
+      </p>
+      <h1>
+        {latest?.entry.number && <span class="profile-number">#{latest.entry.number}</span>}
+        {athlete.name}
+      </h1>
+      {facts.length > 0 && (
+        <dl class="profile-facts">
+          {facts.map((fact) => <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}
+        </dl>
+      )}
     </div>
   </div>
 </section>
 
 <div class="profile-body">
-  <section class="profile-section profile-bio">
-    <p class="eyebrow">PVVA / {athlete.name}</p>
-    <h2>{t.biography}</h2>
-    {bio?.length ? bio.map((paragraph) => <p>{paragraph}</p>) : <p class="profile-muted">{t.bioPending}</p>}
-  </section>
-
-  <aside class="profile-side">
+  <aside class="profile-card">
+    <div class="profile-photo">
+      <AthletePhoto athlete={athlete} number={latest?.entry.number} priority />
+    </div>
     {info.length > 0 && (
-      <section class="profile-section">
+      <div class="profile-card-info">
         <h2>{t.playerInfo}</h2>
         <dl class="profile-info">
           {info.map((fact) => <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}
         </dl>
-      </section>
+      </div>
     )}
+  </aside>
 
-    {athlete.achievements && athlete.achievements.length > 0 && (
+  <div class="profile-main">
+    <section class="profile-section profile-bio">
+      <p class="eyebrow">PVVA / {athlete.name}</p>
+      <h2>{t.biography}</h2>
+      {bio?.length ? bio.map((paragraph) => <p>{paragraph}</p>) : <p class="profile-muted">{t.bioPending}</p>}
+    </section>
+
+    {achievements.length > 0 && (
       <section class="profile-section">
         <h2>{athlete.achievementsTitle?.[lang] ?? t.achievementsDefault}</h2>
         <ul class="profile-achievements">
-          {athlete.achievements.map((item) => (
+          {achievements.map((item) => (
             <li><span>{item.year ?? ''}</span>{item.text[lang]}</li>
           ))}
         </ul>
@@ -121,7 +123,7 @@ const bio = athlete.bio?.[lang]?.length ? athlete.bio[lang] : athlete.bio?.en;
         </table>
       </section>
     )}
-  </aside>
+  </div>
 </div>
 
 {(prev || next) && (

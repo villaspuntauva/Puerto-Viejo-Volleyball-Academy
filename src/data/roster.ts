@@ -11,6 +11,10 @@
  * - Only publish information the athlete (and a parent or guardian for minors) has approved.
  *   Leave a field out and it is simply hidden. Show year of birth only, never a full date of birth.
  *
+ * Achievements can be entered in any order. Profiles always show gold, then silver, then bronze, then
+ * everything else, oldest first within each group. Start the English text with "Gold —", "Silver —"
+ * or "Bronze —" so the medal is recognised. Results from the same year keep the order entered here.
+ *
  * Photos: portrait photos live in /public/images/roster/ as <slug>-pvva.webp (about 800px wide).
  * Athletes without a photo get a branded placeholder.
  *
@@ -314,6 +318,20 @@ export const isCurrentAthlete = (slug: string) => currentSeason.roster.some((row
 
 /** Athletes who appear on at least one season (only these get a profile page). */
 export const listedAthletes = athletes.filter((athlete) => athleteSeasons(athlete.slug).length > 0);
+
+const medalOrder = ['gold', 'silver', 'bronze'];
+
+const medalRank = ({ text }: Achievement) => {
+  const rank = medalOrder.indexOf(text.en.match(/^\w+/)?.[0].toLowerCase() ?? '');
+  return rank === -1 ? medalOrder.length : rank;
+};
+
+/** Gold, silver, bronze, then other results; oldest first within each, with undated entries last. */
+export function sortedAchievements(athlete: Athlete): Achievement[] {
+  return [...(athlete.achievements ?? [])].sort(
+    (a, b) => medalRank(a) - medalRank(b) || (a.year ?? '9999').localeCompare(b.year ?? '9999'),
+  );
+}
 
 // ── URLs ─────────────────────────────────────────────────────────
 
