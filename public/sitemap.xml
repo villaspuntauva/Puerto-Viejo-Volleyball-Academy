@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Entry point at /sitemap.xml. The actual page list (sitemap-0.xml) is generated
+  on every build by @astrojs/sitemap from the real pages in src/pages, so new
+  pages and athletes are picked up automatically.
+-->
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>https://www.pvvolleyballacademy.com/sitemap-0.xml</loc>
+  </sitemap>
+</sitemapindex>
