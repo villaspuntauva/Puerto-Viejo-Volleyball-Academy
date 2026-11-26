@@ -18,6 +18,9 @@
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
+/* Never let the page pan sideways on phones (clip keeps sticky elements working). */
+html, body { overflow-x: hidden; }
+@supports (overflow: clip) { html, body { overflow-x: clip; } }
 body { margin: 0; min-width: 320px; font-size: 16px; line-height: 1.55; }
 img { display: block; max-width: 100%; }
 a { color: inherit; }
@@ -172,8 +175,8 @@ h2 { margin: 0; font-family: var(--font-display); font-size: clamp(43px, 6vw, 78
 .destination-copy > p:not(.eyebrow):not(.destination-place) { max-width: 410px; margin: 25px 0 30px; color: #504a51; }
 .destination-place { margin: 34px 0 0; color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .12em; }
 
-.v-carousel { position: relative; min-width: 0; }
-.v-carousel-viewport { overflow-x: auto; scrollbar-width: none; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%); }
+.v-carousel { position: relative; min-width: 0; max-width: 100%; overflow: hidden; }
+.v-carousel-viewport { overflow: hidden; touch-action: pan-y; overscroll-behavior-x: contain; scrollbar-width: none; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%); }
 .v-carousel-viewport::-webkit-scrollbar { display: none; }
 .v-carousel.is-ready .v-carousel-viewport { overflow: hidden; }
 .v-carousel-track { display: flex; width: max-content; gap: 16px; margin: 0; padding: 0; list-style: none; will-change: transform; }
@@ -387,7 +390,9 @@ html[lang="es"] .page-intro h1 { line-height: 1.02; }
   .hero-content h1 { font-size: clamp(70px, 20vw, 102px); }
   .hero-kicker { max-width: 240px; font-size: 9px; }
   .hero-description { max-width: 300px; font-size: 17px; }
-  .hero-actions { align-items: flex-start; gap: 18px; }
+  .hero-actions { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .hero-actions .button { min-width: 210px; justify-content: space-between; }
+  .hero-actions .text-link { min-height: 44px; }
   .hero-side-note { max-width: 180px; font-size: 8px; }
   .intro-band, .program-section, .whats-on, .content-section { padding: 65px 24px; }
   .intro-content h2 { font-size: 46px; }
@@ -635,6 +640,11 @@ html[lang="es"] .page-intro h1 { line-height: 1.02; }
 .pricing-table td { font-weight: 700; white-space: nowrap; }
 .pricing-notes { max-width: 760px; margin: 20px 0 0; padding: 0; color: var(--muted); font-size: 13px; list-style: none; }
 .pricing-notes li + li { margin-top: 4px; }
+@media (max-width: 560px) {
+  .pricing-table { min-width: 0; }
+  .pricing-table th, .pricing-table td { padding: 14px 8px; font-size: 13px; }
+  .pricing-table td { white-space: normal; }
+}
 .program-card .program-card-pathways { margin-top: 12px; color: #d2b9eb; font-family: var(--font-display); font-size: 18px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
 .program-list-section .section-heading .eyebrow { color: var(--purple-bright); }
 .program-card div > p:not(.program-audience) { margin: 0; color: #eee8f3; font-size: 13px; }

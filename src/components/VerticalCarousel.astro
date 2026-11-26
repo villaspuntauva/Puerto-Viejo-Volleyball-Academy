@@ -90,23 +90,40 @@ const nextLabel = lang === 'es' ? 'Foto siguiente' : 'Next photo';
       requestAnimationFrame(frame);
     };
 
+    // Move to the next whole slide in the chosen direction.
+    const go = (dir: number) => {
+      const step = stepWidth();
+      const base = tween ? tween.to : offset;
+      const target = dir > 0
+        ? (Math.floor(base / step + 0.001) + 1) * step
+        : (Math.ceil(base / step - 0.001) - 1) * step;
+      if (reduceMotion) {
+        offset = target;
+        tween = null;
+      } else {
+        tween = { from: offset, to: target, start: performance.now() };
+      }
+    };
+
     carousel.querySelectorAll<HTMLButtonElement>('.v-carousel-arrow').forEach((button) => {
-      button.addEventListener('click', () => {
-        const dir = Number(button.dataset.dir);
-        const step = stepWidth();
-        // Move to the next whole slide in the chosen direction.
-        const base = tween ? tween.to : offset;
-        const target = dir > 0
-          ? (Math.floor(base / step + 0.001) + 1) * step
-          : (Math.ceil(base / step - 0.001) - 1) * step;
-        if (reduceMotion) {
-          offset = target;
-          tween = null;
-        } else {
-          tween = { from: offset, to: target, start: performance.now() };
-        }
-      });
+      button.addEventListener('click', () => go(Number(button.dataset.dir)));
     });
+
+    // Swipe on phones: pause while touching, then snap one whole photo left or right.
+    let touchX = 0;
+    let touchY = 0;
+    viewport.addEventListener('touchstart', (e) => {
+      touchX = e.touches[0].clientX;
+      touchY = e.touches[0].clientY;
+      hovering = true;
+    }, { passive: true });
+    viewport.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - touchX;
+      const dy = e.changedTouches[0].clientY - touchY;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) go(dx < 0 ? 1 : -1);
+      hovering = false;
+    }, { passive: true });
+    viewport.addEventListener('touchcancel', () => (hovering = false), { passive: true });
 
     viewport.addEventListener('mouseenter', () => (hovering = true));
     viewport.addEventListener('mouseleave', () => (hovering = false));
