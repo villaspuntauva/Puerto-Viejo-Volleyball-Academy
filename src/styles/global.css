@@ -335,7 +335,8 @@ html[lang="es"] .page-intro h1 { line-height: 1.02; }
   .destination-copy { padding: 0 8vw; }
   .intro-aside { order: 2; }
   .intro-band .intro-logo { width: 96px; margin-left: 18px; }
-  .intro-photo { aspect-ratio: 4 / 5; max-height: 560px; }
+  .intro-aside { align-items: center; }
+  .intro-photo { width: 100%; max-width: 448px; margin: 0 auto; aspect-ratio: 4 / 5; }
   .site-header { min-height: 72px; }
   .desktop-nav, .header-actions { display: none; }
   .brand { min-width: 0; }
@@ -391,13 +392,13 @@ html[lang="es"] .page-intro h1 { line-height: 1.02; }
   .hero-kicker { max-width: 240px; font-size: 9px; }
   .hero-description { max-width: 300px; font-size: 17px; }
   .hero-actions { flex-direction: column; align-items: flex-start; gap: 6px; }
-  .hero-actions .button { min-width: 210px; justify-content: space-between; }
+  .hero-actions .button { min-width: 180px; }
   .hero-actions .text-link { min-height: 44px; }
   .hero-side-note { max-width: 180px; font-size: 8px; }
   .intro-band, .program-section, .whats-on, .content-section { padding: 65px 24px; }
   .intro-content h2 { font-size: 46px; }
   .intro-columns, .prose-columns { grid-template-columns: 1fr; gap: 12px; }
-  .intro-columns { margin-bottom: 92px; }
+  .intro-columns { margin-bottom: 24px; }
   .section-heading { align-items: flex-start; flex-direction: column; gap: 16px; margin-bottom: 29px; }
   .section-heading h2 { font-size: 48px; }
   .section-heading > p { max-width: 390px; }
