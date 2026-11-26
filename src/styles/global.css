@@ -18,9 +18,9 @@
 
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
 /* Never let the page pan sideways on phones (clip keeps sticky elements working). */
-html, body { overflow-x: hidden; }
+body { overflow-x: hidden; }
 @supports (overflow: clip) { html, body { overflow-x: clip; } }
 body { margin: 0; min-width: 320px; font-size: 16px; line-height: 1.55; }
 img { display: block; max-width: 100%; }
@@ -29,9 +29,9 @@ button, summary { font: inherit; }
 ::selection { color: white; background: var(--purple); }
 :focus-visible { outline: 3px solid #b893e2; outline-offset: 4px; }
 
-.skip-link { position: fixed; z-index: 20; top: 8px; left: 8px; padding: 12px 16px; color: white; background: var(--purple); transform: translateY(-160%); }
+.skip-link { position: fixed; z-index: 40; top: 8px; left: 8px; padding: 12px 16px; color: white; background: var(--purple); transform: translateY(-160%); }
 .skip-link:focus { transform: translateY(0); }
-.site-header { position: relative; z-index: 10; display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 82px; padding: 0 clamp(20px, 5vw, 78px); background: white; }
+.site-header { position: sticky; top: 0; z-index: 30; box-shadow: 0 1px 0 rgba(23, 21, 26, .08); display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 82px; padding: 0 clamp(20px, 5vw, 78px); background: white; }
 .brand { display: flex; align-items: center; gap: 11px; min-width: 205px; color: var(--purple); text-decoration: none; }
 .brand-logo { display: block; width: 58px; height: 58px; flex: none; object-fit: contain; }
 .brand-name { font-size: 10px; font-weight: 700; line-height: 1.15; text-transform: uppercase; }
@@ -349,7 +349,7 @@ html[lang="es"] .page-intro h1 { line-height: 1.02; }
   .mobile-menu[open] summary span:first-child { transform: translateY(7px) rotate(45deg); }
   .mobile-menu[open] summary span:nth-child(2) { opacity: 0; }
   .mobile-menu[open] summary span:last-child { transform: translateY(-7px) rotate(-45deg); }
-  .mobile-menu nav { position: absolute; top: 55px; right: -12px; display: grid; width: min(340px, calc(100vw - 32px)); padding: 12px 20px 20px; background: white; box-shadow: 0 14px 34px #24143324; }
+  .mobile-menu nav { position: absolute; top: 55px; right: -12px; display: grid; max-height: calc(100svh - 80px); overflow-y: auto; overscroll-behavior: contain; width: min(340px, calc(100vw - 32px)); padding: 12px 20px 20px; background: white; box-shadow: 0 14px 34px #24143324; }
   .mobile-menu nav a { padding: 12px 2px; border-bottom: 1px solid #eeeaf1; font-size: 14px; font-weight: 600; text-decoration: none; }
   .mobile-menu nav .mobile-join { margin-top: 12px; padding: 13px 16px; color: white; border: 0; background: var(--purple); text-transform: uppercase; }
   .mobile-menu nav .mobile-contact { color: var(--purple); }
