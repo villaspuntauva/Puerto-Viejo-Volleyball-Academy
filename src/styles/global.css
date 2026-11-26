@@ -17,6 +17,7 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { scroll-behavior: smooth; }
 /* Never let the page pan sideways on phones (clip keeps sticky elements working). */
 html, body { overflow-x: hidden; }
@@ -713,3 +714,9 @@ html[lang="es"] .page-intro h1 { line-height: 1.02; }
 .coach-entry .profile-facts { display: flex; flex-wrap: wrap; column-gap: clamp(28px, 4vw, 56px); }
 .coach-entry .profile-facts div { padding-right: 0; }
 .coach-entry .profile-facts dd a { overflow-wrap: normal; white-space: nowrap; }
+@media (max-width: 560px) {
+  .roster-table { min-width: 0; font-size: 12px; }
+  .roster-table th, .roster-table td { padding: 12px 6px; }
+  .roster-table thead th { font-size: 9px; letter-spacing: .04em; }
+  .roster-table-number { width: auto; font-size: 18px; }
+}
