@@ -110,7 +110,7 @@ export const spanishPages: Record<string, SpanishPage> = {
     description: 'Información de privacidad para las personas que contactan a Puerto Viejo Volleyball Academy por medio de su sitio web.',
     eyebrow: 'Información del sitio web',
     heading: 'Tu privacidad importa.',
-    intro: 'Este sitio no utiliza analítica ni recibe formularios.',
+    intro: 'Este sitio utiliza herramientas de analítica de Google para entender cómo se usa. No recibe formularios.',
     number: '10',
     sections: [
       {
@@ -122,8 +122,12 @@ export const spanishPages: Record<string, SpanishPage> = {
         paragraphs: ['Las donaciones se realizan a través de PayPal, fuera de este sitio. PayPal gestiona los datos de pago según su propia política de privacidad.'],
       },
       {
+        title: 'Analítica',
+        paragraphs: ['Este sitio utiliza Google Tag Manager para cargar herramientas de medición de Google, como Google Analytics. Estas herramientas usan cookies y tecnologías similares para recopilar información como las páginas que visitas, el tiempo que permaneces, el tipo de dispositivo y navegador, y tu ubicación aproximada. PVVA utiliza esta información solo para entender cómo se usa el sitio y mejorarlo. Google procesa estos datos según su propia política de privacidad (policies.google.com/privacy). Puedes bloquear estas cookies desde la configuración de tu navegador o usar el complemento de inhabilitación de Google Analytics (tools.google.com/dlpage/gaoptout).'],
+      },
+      {
         title: 'Datos del sitio',
-        paragraphs: ['Este sitio no incluye formularios, analítica, píxeles publicitarios ni registro de cuentas. El proveedor de alojamiento puede procesar registros técnicos estándar para entregar y proteger el sitio.'],
+        paragraphs: ['Este sitio no incluye formularios, píxeles publicitarios ni registro de cuentas. El proveedor de alojamiento puede procesar registros técnicos estándar para entregar y proteger el sitio.'],
       },
       {
         title: 'Antes del lanzamiento',
